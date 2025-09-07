@@ -1,0 +1,18 @@
+.training-container { width: 95%; margin: 20px auto; }
+.course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+.course-card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+.course-card h3 { margin-top: 10px; margin-bottom: 10px; }
+.course-card p { flex-grow: 1; color: #555; font-size: 14px; }
+.course-type { font-size: 12px; font-weight: bold; padding: 4px 8px; border-radius: 12px; color: white; align-self: flex-start; }
+.type-Nội-bộ { background-color: #007bff; }
+.type-Bên-ngoài { background-color: #fd7e14; }
+.course-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+.enroll-btn { background-color: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
+
+.training-table-container table { width: 100%; border-collapse: collapse; }
+.training-table-container th, .training-table-container td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+.training-status, .training-result { padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; }
+.status-Đã-đăng-ký { background-color: #17a2b8; }
+.status-Đã-hoàn-thành { background-color: #28a745; }
+.result-Đạt { color: #28a745; font-weight: bold; }
+.result-Không-đạt { color: #dc3545; font-weight: bold; }

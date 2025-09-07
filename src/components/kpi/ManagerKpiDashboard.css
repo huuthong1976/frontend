@@ -1,0 +1,76 @@
+/* Sử dụng biến CSS để quản lý màu sắc dễ dàng */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --background-color: #f4f7f9;
+    --border-color: #dee2e6;
+    --text-color: #333;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-page {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    padding: 20px 30px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--dark-color);
+}
+
+/* Style nút bấm chung */
+.btn {
+    padding: 8px 15px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-view {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.btn-view:hover {
+    background-color: #0056b3;
+}
+.action-bar {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end; /* Căn nút về phía bên phải */
+}
+
+.btn-bulk-approve {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-bulk-approve:hover {
+    background-color: #218838;
+}
+
+.btn-bulk-approve:disabled {
+    background-color: var(--secondary-color);
+    cursor: not-allowed;
+    opacity: 0.65;
+}

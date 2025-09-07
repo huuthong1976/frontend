@@ -1,0 +1,611 @@
+/* =================================================================== */
+/* FILE: HrmStyle.css                                                  */
+/* Giao diện chuyên nghiệp cho Module Quản lý Nhân sự                  */
+/* =================================================================== */
+
+/* --- 1. Biến màu sắc và cài đặt chung --- */
+:root {
+  --primary-color: #3b82f6; /* Xanh dương chủ đạo */
+  --primary-dark: #2563eb; /* Xanh dương đậm hơn khi hover/active */
+  --secondary-color: #6b7280; /* Xám phụ đạo cho nút, văn bản */
+  --accent-color: #10b981; /* Xanh lá cây cho các điểm nhấn */
+  --danger-color: #ef4444; /* Đỏ cho lỗi, cảnh báo */
+  --warning-color: #f59e0b; /* Cam cho trạng thái chờ */
+
+  --text-base: #374151; /* Màu chữ cơ bản */
+  --text-light: #6b7280; /* Màu chữ phụ */
+  --text-heading: #1f2937; /* Màu chữ tiêu đề */
+  --text-on-primary: #ffffff; /* Màu chữ trên nền primary */ /* MỚI */
+
+  --bg-body: #f3f4f6; /* Nền của toàn bộ trang */
+  --bg-card: #ffffff; /* Nền của các khối nội dung */
+  --border-color: #e5e7eb; /* Màu đường viền chung */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  --font-family: 'Inter', sans-serif;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --spacing-unit: 8px; /* Đơn vị khoảng cách cơ bản */
+}
+
+/* --- 2. Cài đặt lại CSS toàn cục (Reset/Base Styles) --- */
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-body);
+  color: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-heading);
+  margin-top: 0;
+  margin-bottom: calc(var(--spacing-unit) * 2);
+  font-weight: 700;
+}
+
+h1 { font-size: 2.25rem; } /* ~36px */
+h2 { font-size: 1.875rem; } /* ~30px */
+h3 { font-size: 1.5rem; } /* ~24px */
+h4 { font-size: 1.25rem; } /* ~20px */
+p { margin-bottom: var(--spacing-unit); }
+
+/* --- 3. Bố cục chung --- */
+.hrm-page-container {
+  padding: calc(var(--spacing-unit) * 3); /* 24px */
+  margin: calc(var(--spacing-unit) * 3) auto;
+  max-width: 1400px;
+  width: calc(100% - var(--spacing-unit) * 6); /* 95% nhưng có padding */
+  box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước tổng */
+}
+
+/* --- 4. Tiêu đề trang & Thanh công cụ --- */
+.hrm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+  gap: calc(var(--spacing-unit) * 2); /* Khoảng cách giữa các item khi wrap */
+}
+.hrm-header h1 {
+  font-size: 2rem; /* slightly smaller for better balance */
+  margin: 0;
+}
+
+/* Thanh công cụ (Toolbar) */
+.hrm-toolbar {
+  display: flex;
+  gap: calc(var(--spacing-unit) * 2); /* 16px */
+  padding: calc(var(--spacing-unit) * 2);
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-md);
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+  align-items: center;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: calc(var(--spacing-unit) + 2px) calc(var(--spacing-unit) * 1.5); /* 10px 12px */
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  min-width: 100px; /* Đảm bảo input không quá nhỏ */
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); /* Focus ring */
+}
+
+/* Thêm style cho select filter */
+.filter-select {
+  padding: calc(var(--spacing-unit) + 2px) calc(var(--spacing-unit) * 1.5);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  color: var(--text-base);
+  background-color: #fcfcfc;
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236B7280'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 1em;
+  cursor: pointer;
+  min-width: 150px;
+}
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+
+/* --- 5. Nút bấm (Buttons) --- */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing-unit) / 2); /* Khoảng cách icon và text */
+}
+
+.btn i {
+  margin-right: calc(var(--spacing-unit) / 2); /* Khoảng cách icon và text trong button */
+}
+
+.btn--primary {
+  background-color: var(--primary-color);
+  color: var(--text-on-primary); /* SỬA: Dùng biến màu chữ trên nền primary */
+}
+.btn--primary:hover {
+  background-color: var(--primary-dark);
+  box-shadow: var(--shadow-sm);
+}
+.btn--primary:active {
+  transform: translateY(1px);
+}
+
+.btn--secondary {
+  background-color: var(--bg-body);
+  color: var(--text-base);
+  border: 1px solid var(--border-color);
+}
+.btn--secondary:hover {
+  background-color: #e9ebee; /* Màu nền nhẹ hơn khi hover */
+  box-shadow: var(--shadow-sm);
+}
+.btn--secondary:active {
+  transform: translateY(1px);
+}
+
+/* Nút hành động trong bảng - Tăng kích thước và tinh chỉnh */
+.action-btn {
+  background-color: var(--primary-color); /* MỚI: Đổi màu nền nút hành động */
+  border: 1px solid var(--primary-color); /* MỚI: Border trùng màu nền */
+  color: var(--text-on-primary); /* MỚI: Màu chữ trên nền primary */
+  cursor: pointer;
+  font-size: 0.75rem; /* SỬA: Giảm font-size để text gọn hơn */
+  padding: 6px 12px; /* SỬA: Điều chỉnh padding để nút gọn và cân đối hơn */
+  border-radius: var(--border-radius-md);
+  transition: all 0.2s ease; /* MỚI: Transition cho tất cả thuộc tính */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; /* MỚI: Căn giữa nội dung */
+  gap: 6px; /* Khoảng cách giữa icon và text */
+  min-width: 100px; /* Đảm bảo đủ rộng cho text "Xem hồ sơ" */ /* MỚI */
+}
+.action-btn:hover {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark); /* MỚI: Border cũng đổi màu */
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px); /* MỚI: Thêm hiệu ứng nhấc nhẹ */
+}
+.action-btn:active {
+  transform: translateY(0); /* MỚI: Hiệu ứng nhấn xuống */
+}
+.action-btn i {
+    margin-right: 0; /* Đã dùng gap */
+}
+
+
+/* --- 6. Bảng dữ liệu --- */
+.hrm-table-container {
+  overflow-x: auto; /* Cho phép cuộn ngang trên màn hình nhỏ */
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+.hrm-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px; /* Đảm bảo bảng có chiều rộng tối thiểu */
+}
+.hrm-table th, .hrm-table td {
+  padding: calc(var(--spacing-unit) * 0.8) calc(var(--spacing-unit) * 1); /* 12px 16px */
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color); /* ĐƯỜNG KẺ GIỮA CÁC CỘT */
+}
+
+/* Loại bỏ đường kẻ phải cho cột cuối cùng để tránh viền thừa */
+.hrm-table th:last-child,
+.hrm-table td:last-child {
+  border-right: none;
+}
+
+/* MỚI: Màu nền cho tiêu đề bảng */
+.hrm-table thead th {
+  background-color: var(--primary-color); /* Đổi sang màu xanh */
+  color: var(--text-on-primary); /* Màu chữ trắng trên nền xanh */
+  font-size: 0.85rem; /* SỬA: Tăng nhẹ font-size cho dễ đọc */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-align: center; /* CĂN GIỮA TIÊU ĐỀ CỘT */
+}
+
+/* MỚI: Kích thước chữ cho nội dung bảng */
+.hrm-table tbody td {
+  font-size: 0.8rem; /* Giảm kích thước chữ cho nội dung bảng */
+}
+/* CĂN GIỮA NỘI DUNG CHO CÁC CỘT TRẠNG THÁI VÀ HÀNH ĐỘNG */
+/* Sử dụng các selector cụ thể cho cột Trạng thái (thứ 5) và Hành động (thứ 6) */
+.hrm-table tbody td:nth-child(1),
+.hrm-table tbody td:nth-child(5), /* Cột Trạng thái */
+.hrm-table tbody td:nth-child(6) { /* Cột Hành động */
+    text-align: center;
+}
+
+/* MỚI: Nền trắng và hồng nhạt xen kẽ */
+.hrm-table tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* Nền trắng cho hàng lẻ */
+}
+
+.hrm-table tbody tr:nth-child(even) {
+  background-color: #fcebeb; /* Nền hồng nhạt cho hàng chẵn (ví dụ: một màu hồng rất nhạt) */
+}
+
+/* Giữ hiệu ứng hover */
+.hrm-table tbody tr:hover {
+  background-color: #e9ebee; /* Màu nền nhẹ hơn khi hover */
+}
+
+
+
+/* Huy hiệu trạng thái - Cập nhật màu sắc để rõ chữ hơn */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 9999px; /* Fully rounded */
+  font-size: 0.75rem; /* 12px */
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap; /* Ngăn không cho text xuống dòng */
+}
+/* Màu sắc mới cho trạng thái - Tinh tế hơn với độ tương phản tốt */
+.status--active {
+  background-color: #5d8570;; /* Nền xanh lá rất nhạt */ /* SỬA */
+  color: #151817; /* Chữ xanh lá đậm hơn nhiều */ /* SỬA */
+  border: 1px solid #3935f1; /* Viền xanh lá nhạt */ /* MỚI */
+}
+.status--inactive {
+  background-color: #fee2e2; /* Nền đỏ nhạt */
+  color: #991b1b; /* Chữ đỏ đậm hơn */ /* ĐIỀU CHỈNH MÀU CHỮ Ở ĐÂY */
+  border: 1px solid #fecaca; /* Viền đỏ nhạt */
+}
+.status--pending { /* Ví dụ trạng thái chờ */
+  background-color: #fffbe6; /* Nền vàng nhạt */
+  color: #92400e; /* Chữ vàng đậm */ /* ĐIỀU CHỈNH MÀU CHỮ Ở ĐÂY */
+  border: 1px solid #fde68a; /* Viền vàng nhạt */
+}
+
+
+/* --- 7. Trang hồ sơ cá nhân --- */
+.profile-card {
+  display: grid;
+  grid-template-columns: auto 1fr; /* Avatar | Info & Details */
+  gap: calc(var(--spacing-unit) * 3); /* 24px */
+  align-items: flex-start; /* Căn chỉnh lên đầu */
+  padding: calc(var(--spacing-unit) * 3);
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border-color);
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  box-shadow: var(--shadow-md);
+}
+.profile-avatar {
+  flex-shrink: 0; /* Ngăn avatar bị co lại */
+}
+.profile-avatar img {
+  width: 120px; /* Tăng kích thước avatar */
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+.profile-info {
+  margin-bottom: calc(var(--spacing-unit) * 2);
+}
+.profile-info h2 {
+  font-size: 1.75rem; /* slightly smaller than page title */
+  margin-bottom: calc(var(--spacing-unit) / 2);
+}
+.profile-info p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  margin-bottom: calc(var(--spacing-unit));
+}
+.profile-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
+  gap: calc(var(--spacing-unit) * 1.5); /* 12px */
+  margin-top: calc(var(--spacing-unit) * 2); /* Khoảng cách từ info */
+}
+.profile-details p strong {
+  color: var(--text-base);
+  font-weight: 600;
+  display: block; /* Đảm bảo strong nằm trên 1 dòng riêng hoặc khối */
+  margin-bottom: 2px;
+}
+.profile-details p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+/* Tabs */
+.profile-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  overflow-x: auto; /* Cho phép cuộn ngang nếu có nhiều tab */
+}
+.profile-tabs button {
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent; /* Viền dưới để active */
+  white-space: nowrap; /* Ngăn không cho text xuống dòng */
+}
+.profile-tabs button:hover {
+  color: var(--primary-color);
+}
+.profile-tabs button.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  font-weight: 600;
+}
+
+.tab-content {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-md);
+  padding: calc(var(--spacing-unit) * 3);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+}
+
+/* --- 8. Modal & Form --- */
+.modal-backdrop {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px); /* Hiệu ứng làm mờ nền */
+}
+.employee-form-modal {
+  background: white;
+  padding: calc(var(--spacing-unit) * 3);
+  border-radius: var(--border-radius-lg);
+  width: 90%; /* Tương thích tốt hơn trên mobile */
+  max-width: 768px; /* Giới hạn chiều rộng tối đa */
+  box-shadow: var(--shadow-lg);
+  position: relative; /* Để các button đóng được */
+  max-height: 90vh; /* Giới hạn chiều cao */
+  overflow-y: auto; /* Cuộn nếu nội dung quá dài */
+}
+.employee-form-modal h3 {
+  font-size: 1.75rem;
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  text-align: center;
+}
+
+.employee-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns */
+  gap: calc(var(--spacing-unit) * 2); /* 16px */
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-group.full-width {
+  grid-column: 1 / -1; /* Luôn chiếm toàn bộ chiều rộng */
+}
+.form-group label {
+  font-weight: 600;
+  margin-bottom: calc(var(--spacing-unit) / 2); /* 4px */
+  color: var(--text-base);
+  font-size: 0.95rem;
+}
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  color: var(--text-base);
+  background-color: #fcfcfc;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+.form-group select {
+  appearance: none; /* Bỏ style mặc định của select */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236B7280'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 1em;
+}
+
+
+/* File Upload & Avatar Preview */
+.file-upload-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: var(--secondary-color);
+  color: white;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  gap: calc(var(--spacing-unit) / 2);
+}
+.file-upload-label:hover {
+  background-color: #4b5563; /* Darker secondary */
+}
+.file-upload-label i {
+  margin-right: 0; /* Đã có gap */
+}
+
+.preview-avatar-wrapper {
+  margin-top: calc(var(--spacing-unit) * 2);
+  text-align: center;
+}
+.preview-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.employee-form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: calc(var(--spacing-unit) * 2);
+  margin-top: calc(var(--spacing-unit) * 3);
+}
+
+/* --- 9. Thông báo lỗi --- */
+.error-message {
+  color: var(--danger-color);
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  padding: calc(var(--spacing-unit) * 1.5);
+  border-radius: var(--border-radius-md);
+  margin-top: calc(var(--spacing-unit) * 3);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* --- 10. Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .hrm-page-container {
+    padding: calc(var(--spacing-unit) * 2);
+    width: calc(100% - var(--spacing-unit) * 4);
+  }
+
+  .hrm-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--spacing-unit) * 1.5);
+  }
+  .hrm-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .hrm-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-input, .filter-select { /* Áp dụng cho cả input và select */
+    min-width: unset; /* Bỏ giới hạn chiều rộng tối thiểu */
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+  }
+
+  .hrm-table {
+    min-width: 600px; /* Giữ min-width cho bảng để tránh hỏng bố cục */
+  }
+
+  .profile-card {
+    grid-template-columns: 1fr; /* Stack avatar and info on smaller screens */
+    text-align: center;
+  }
+  .profile-avatar {
+    margin: 0 auto; /* Căn giữa avatar */
+  }
+  .profile-details {
+    grid-template-columns: 1fr; /* Stack details */
+  }
+
+  .employee-form {
+    grid-template-columns: 1fr; /* Stack all form fields */
+  }
+
+  .employee-form-modal {
+    padding: calc(var(--spacing-unit) * 2);
+  }
+}
+
+@media (max-width: 480px) {
+  .hrm-page-container {
+    padding: var(--spacing-unit);
+    width: calc(100% - var(--spacing-unit) * 2);
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+
+  .btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+  .employee-form-actions {
+    flex-direction: column;
+    gap: var(--spacing-unit);
+  }
+  .employee-form-actions .btn {
+    width: 100%;
+  }
+}
+/* src/components/hrm/HrmStyle.css */
+
+/* Cập nhật lại header để căn chỉnh các phần tử */
+.hrm-header {
+  display: flex;
+  justify-content: space-between; /* Đẩy các phần tử về 2 phía */
+  align-items: center;
+  width: 100%;
+}
+
+/* Style cho nút Quay lại mới */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Khoảng cách giữa icon và chữ */
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-back:hover {
+  background-color: #e9ecef;
+  border-color: #ced4da;
+}

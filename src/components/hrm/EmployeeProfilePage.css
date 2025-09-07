@@ -1,0 +1,311 @@
+/* Giao diện EmployeeProfilePage.css hiện đại, rõ ràng, đẹp mắt */
+
+/* Container chính */
+.hrm-container { /* Sử dụng cho cả HrmDashboard và EmployeeProfilePage */
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px; /* Tăng padding */
+    background-color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1); /* Đổ bóng nhẹ hơn */
+    border-radius: 15px; /* Bo góc nhiều hơn */
+    color: #333;
+}
+
+.hrm-container h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #0d3b66;
+    border-bottom: 2px solid #e0e0e0; /* Đường kẻ mỏng hơn */
+    padding-bottom: 12px;
+    text-align: center; /* Căn giữa tiêu đề */
+}
+
+/* Profile Header (cho EmployeeProfilePage) */
+.profile-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: grid; /* Sử dụng grid cho layout thông tin */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px 20px;
+}
+.profile-header p {
+    font-size: 16px;
+    margin: 0; /* Bỏ margin mặc định */
+    color: #555;
+    line-height: 1.5;
+}
+.profile-header p strong {
+    color: #222;
+}
+
+
+.status {
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-block;
+    text-transform: capitalize;
+    min-width: 70px; /* Đặt chiều rộng tối thiểu để đồng đều nếu cần */
+    text-align: center; /* Căn giữa chữ trong badge */
+}
+
+.status-Đang-làm-việc { /* Sửa tên class */
+    background-color: rgb(76, 6, 228); /* Màu xanh lá nhạt hơn (như Bootstrap success-light) */
+    color: #0b0c0c; /* Màu chữ xanh lá đậm hơn */
+    border: 1px solid #badbcc; /* Thêm viền nhẹ */
+}
+
+.status-Đã-nghỉ-việc { /* Sửa tên class */
+    background-color: rgb(77, 8, 236), 215, 248); /* Màu đỏ nhạt hơn (như Bootstrap danger-light) */
+    color: #721c24; /* Màu chữ đỏ đậm hơn */
+    border: 1px solid #f5c6cb; /* Thêm viền nhẹ */
+}
+
+/* Tabs */
+.profile-tabs {
+    margin-top: 30px;
+    margin-bottom: 25px; /* Khoảng cách dưới tabs */
+    display: flex;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    gap: 10px;
+}
+
+.profile-tabs button {
+    background: #e9ecef;
+    border: 1px solid #ced4da;
+    padding: 12px 20px; /* Tăng padding */
+    border-radius: 8px; /* Bo góc nhẹ */
+    font-weight: 600; /* Chữ đậm hơn */
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 15px;
+}
+
+.profile-tabs button.active {
+    background: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
+}
+
+.profile-tabs button:hover:not(.active) {
+    background: #d4e3f8;
+    color: #0d6efd;
+}
+
+/* Table styles for profile tabs */
+.tab-pane {
+    margin-bottom: 30px;
+}
+.tab-pane button { /* Nút thêm trong tab-pane */
+    background-color: #28a745;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 15px; /* Khoảng cách với bảng */
+    transition: background-color 0.3s ease;
+}
+.tab-pane button:hover {
+    background-color: #218838;
+}
+
+/* Các style bảng chung cho HR (HrmDashboard và EmployeeProfilePage) */
+.hrm-table-container table { /* Dùng chung class này */
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px; /* GIẢM KÍCH THƯỚC FONT CHỮ TRONG BẢNG */
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Đổ bóng nhẹ */
+    border-radius: 8px; /* Bo góc bảng */
+    overflow: hidden; /* Quan trọng để bo góc hoạt động */
+}
+
+.hrm-table-container th,
+.hrm-table-container td {
+    border: 1px solid #e9ecef; /* Viền mỏng hơn */
+    padding: 12px 15px; /* GIẢM PADDING ĐỂ GIẢN DÒNG VÀ GỌN HƠN */
+    text-align: left;
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+    line-height: 1.4; /* Độ giãn dòng */
+}
+
+.hrm-table-container th {
+    background-color: #0d6efd; /* ĐỔI MÀU NỀN TIÊU ĐỀ SANG XANH ĐẬM */
+    color: white; /* ĐỔI MÀU CHỮ TIÊU ĐỀ SANG TRẮNG */
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px; /* FONT CHO TIÊU ĐỀ NHỎ HƠN */
+}
+
+.hrm-table-container tbody tr:nth-child(even) {
+    background-color: #f2f7fb; /* Nền xanh nhạt xen kẽ */
+}
+.hrm-table-container tbody tr:hover {
+    background-color: #eaf6fd; /* Hiệu ứng hover */
+}
+
+
+/* Toolbar tìm kiếm (cho HrmDashboard) */
+/* Đã có trong HrmDashboard.css, bỏ ở đây để tránh trùng lặp */
+
+
+/* Nút hành động (chung cho các bảng) */
+/* Cải tiến để các nút thẳng hàng và đồng đều hơn */
+.hrm-table-container td:last-child { /* Cột hành động */
+    text-align: center; /* Căn giữa các nút trong cột */
+    white-space: nowrap;/* Ngăn không cho các nút xuống dòng không mong muốn */
+}
+
+.action-buttons-group { /* Wrapper mới cho các nút hành động */
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các nút xuống dòng nếu không đủ chỗ */
+    gap: 5px; /* Khoảng cách giữa các nút */
+    justify-content: center; /* Căn giữa các nút trong nhóm */
+    align-items: center;
+}
+
+.action-btn { /* Style cho nút View, Edit, Delete trong bảng */
+    padding: 6px 10px; /* Kích thước nút GỌN HƠN */
+    border-radius: 5px; /* Bo góc nhẹ */
+    font-size: 13px; /* Kích thước font nút GỌN HƠN */
+    text-decoration: none;
+    color: white; /* Màu chữ mặc định trắng */
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease,transform 0.2s ease;;
+    display: inline-flex; /* Dùng flex để căn giữa text và icon nếu có */
+    align-items: center;
+    justify-content: center;
+    min-width: 55px; /* Đảm bảo kích thước tối thiểu để đồng đều */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);/* Bóng rõ hơn khi hover */
+}
+.action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.action-btn.view {
+    background-color: #0d6efd; /* Xanh dương */
+}
+.action-btn.view:hover { background-color: #0b5ed7; }
+
+.action-btn.edit {
+    background-color: #ffc107; /* Vàng */
+    color: #333; /* Chữ đen */
+}
+.action-btn.edit:hover { background-color: #e0a800; }
+
+.action-btn.delete {
+    background-color: #dc3545; /* Đỏ */
+}
+.action-btn.delete:hover { background-color: #c82333; }
+
+
+/* Modal backdrop & content */
+.modal-backdrop { /* Chung cho tất cả các modal */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6); /* Đen đậm hơn */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Đảm bảo modal luôn ở trên cùng */
+}
+
+.modal-content { /* Chung cho tất cả các modal */
+    background: white;
+    padding: 30px;
+    border-radius: 12px; /* Bo góc */
+    width: 650px; /* Chiều rộng cố định */
+    max-width: 90%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25); /* Đổ bóng */
+    position: relative;
+    /* Có thể thêm animation cho modal */
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #0d3b66;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+/* Form styles inside modal (cho các form trong EmployeeProfilePage, không phải EmployeeForm.js) */
+.modal-content .modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Khoảng cách giữa các input */
+}
+
+.modal-content .modal-form input,
+.modal-content .modal-form select,
+.modal-content .modal-form textarea {
+    padding: 12px 15px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.modal-content .modal-actions { /* Nút hành động trong modal */
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.modal-content .modal-actions button {
+    padding: 12px 25px;
+    font-size: 15px;
+    border-radius: 8px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+.modal-content .modal-actions button:hover {
+    background-color: #0b5ed7;
+}
+.modal-content .modal-actions button[type="button"] { /* Nút Hủy */
+    background-color: #6c757d;
+}
+.modal-content .modal-actions button[type="button"]:hover {
+    background-color: #5a6268;
+}
+
+/* File upload label */
+.modal-content .modal-form .file-upload-label {
+    display: block;
+    background-color: #e9ecef;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px dashed #ced4da;
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+    color: #495057;
+    transition: background-color 0.2s ease;
+}
+.modal-content .modal-form .file-upload-label:hover {
+    background-color: #dee2e6;
+}
+.modal-content .modal-form input[type="file"] {
+    display: none;
+}

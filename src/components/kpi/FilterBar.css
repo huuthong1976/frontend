@@ -1,0 +1,36 @@
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end; /* Căn các item xuống dưới */
+    gap: 20px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-item label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.filter-item select,
+.filter-item input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 0.9rem;
+    min-width: 180px; /* Độ rộng tối thiểu cho các bộ lọc */
+}
+
+.filter-item--search {
+    flex-grow: 1; /* Cho phép ô tìm kiếm mở rộng */
+}

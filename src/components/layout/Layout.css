@@ -1,0 +1,315 @@
+/* Layout chung */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    }
+    
+    .sidebar {
+    width: 260px;
+    background-color: #6c84af;
+    color: white;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    }
+    
+    .sidebar-header {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar-header h3 {
+    color: white;
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: center;
+    }
+    
+    .menu-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+    
+    .menu-nav li {
+    margin-bottom: 10px;
+    }
+    
+    .menu-nav a {
+    display: block;
+    color: rgb(247, 183, 183);
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    }
+    
+    .menu-nav a:hover,
+    .menu-nav a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .menu-group-title {
+    display: block;
+    padding: 10px 15px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    }
+    
+    .sub-menu {
+    padding-left: 15px;
+    }
+    
+    .sub-menu li {
+    margin-bottom: 5px;
+    }
+    
+    .sub-menu a {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    }
+    
+    .main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    }
+    
+    .app-header {
+    background-color: #fff;
+    padding: 0 24px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    }
+    
+    .header-left {}
+    
+    .header-right {
+    display: flex;
+    align-items: center;
+    }
+    
+    .user-profile {
+    margin-right: 20px;
+    }
+    
+    .logout-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    }
+    
+    .logout-btn:hover {
+    background-color: #d32f2f;
+    }
+    
+    .page-content {
+    padding: 24px;
+    background-color: #f0f2f5;
+    flex-grow: 1;
+    }
+   
+
+.menu-group-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-group-title:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Thêm icon mũi tên cho menu cha */
+.menu-group-title::after {
+    content: '▶'; /* Mũi tên chỉ sang phải */
+    font-size: 0.6em;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Khi menu được mở, xoay mũi tên xuống dưới */
+.menu-group-title.active::after {
+    transform: rotate(90deg);
+}
+
+.sub-menu {
+    list-style: none;
+    padding-left: 15px;
+    margin-top: 5px;
+    /* ✅ Mặc định ẩn menu con */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+
+/* ✅ Khi có class 'active', menu con sẽ hiện ra */
+.sub-menu.active {
+    max-height: 500px; /* Chiều cao đủ lớn để chứa các mục con */
+}
+
+.sub-menu li {
+    margin-bottom: 5px;
+}
+
+.sub-menu a {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.sub-menu a:hover, .sub-menu a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+.menu-group-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px; /* Tăng padding một chút */
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600; /* Chữ đậm hơn */
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-group-title:hover, .menu-group-title.active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-group-title::after {
+    content: '▶';
+    font-size: 0.6em;
+    transition: transform 0.3s ease-in-out;
+}
+
+.menu-group-title.active::after {
+    transform: rotate(90deg);
+}
+
+.sub-menu {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 10px 0; /* Thêm khoảng cách trên dưới */
+
+    /* ✅ Thay đổi chính: Thêm màu nền và bo góc */
+    background-color: rgba(0, 0, 0, 0.2); /* Màu nền tối hơn một chút */
+    border-radius: 4px;
+    
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out; /* Thay đổi transition để bao gồm cả padding */
+}
+
+.sub-menu.active {
+    max-height: 500px;
+    /* ✅ Thay đổi chính: Thêm padding khi xổ ra */
+    padding: 10px 0;
+}
+
+.sub-menu li {
+    margin: 0;
+}
+/* === Cải tiến cho Bảng Thư viện KPI === */
+.kpi-tree-table {
+    width: 100%;
+    border-collapse: collapse; /* Gộp đường viền */
+    border: 2px solid #e8e8e8;
+    font-size: 0.9rem;
+}
+
+.kpi-tree-table th,
+.kpi-tree-table td {
+    border: 2px solid #a59e9e; /* ✅ Tạo hiệu ứng lưới */
+    padding: 12px 16px;
+    text-align:center;
+    vertical-align: middle;
+}
+
+.kpi-tree-table thead th {
+    background-color: #8bc0f4;
+    font-weight: 600;
+}
+
+.kpi-name {
+    font-weight: 500;
+}
+
+/* --- Cải tiến cho Nút Hành động --- */
+.action-btn-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.action-btn.edit {
+    background-color: #e6f7ff;
+    color: #1890ff;
+    border-color: #91d5ff;
+}
+.action-btn.edit:hover {
+    background-color: #bae7ff;
+}
+
+.action-btn.delete {
+    background-color: #fff1f0;
+    color: #f5222d;
+    border-color: #ffa39e;
+}
+.action-btn.delete:hover {
+    background-color: #ffccc7;
+}
+.kpi-tree-table td {
+    /* Canh giữa nội dung theo chiều dọc */
+    vertical-align: middle; 
+    
+    /* Canh giữa nội dung theo chiều ngang */
+    text-align: center; 
+}
+
+/* Riêng cột Tên KPI thì nên canh trái để dễ đọc cấu trúc cây */
+.kpi-tree-table td:first-child {
+    text-align: left;
+}
+.kpi-tree-table thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    
+    /* ✅ THÊM DÒNG NÀY ĐỂ CANH GIỮA TIÊU ĐỀ */
+    text-align: center;
+}
+
+/* Giữ cho tiêu đề cột đầu tiên (Tên KPI) được canh trái */
+.kpi-tree-table thead th:first-child {
+    text-align: left;
+}

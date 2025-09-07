@@ -1,0 +1,49 @@
+.bi-container {
+    width: 95%;
+    margin: 20px auto;
+}
+.bi-filter-bar {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.bi-filter-bar select {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+.bi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.chart-widget {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.chart-widget.full-width {
+    grid-column: 1 / -1;
+}
+.chart-widget h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.custom-tooltip {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+}
+.custom-tooltip .label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}

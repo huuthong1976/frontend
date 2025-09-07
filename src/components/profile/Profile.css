@@ -1,0 +1,58 @@
+:root{
+    --ui-blue:#2563eb;          /* xanh chuẩn */
+    --radius:10px;
+    --input-h:40px;
+    --btn-h:38px;
+  }
+  
+  .account-modal h2{ margin:0 0 16px; }
+  
+  .account-modal .modal-body{ display:grid; gap:12px; }
+  
+  .account-modal .form-group label{
+    display:block; margin-bottom:6px;
+    font-size:13px; font-weight:600; color:#111827;
+  }
+  
+  .account-modal .modal-body input,
+  .account-modal .modal-body textarea{
+    height:var(--input-h);
+    padding:8px 12px;
+    border:1px solid #e5e7eb;
+    border-radius:var(--radius);
+    background:#f9fafb; color:#0f172a; font-size:14px;
+    outline:none;
+  }
+  .account-modal .modal-body input:focus,
+  .account-modal .modal-body textarea:focus{
+    background:#fff;
+    border-color:var(--ui-blue);
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+  }
+  
+  .account-modal .separator{ height:1px; background:#e5e7eb; margin:8px 0 12px; }
+  
+  .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:8px; }
+  
+  .modal-actions .btn,
+  .modal-actions .btn-primary{
+    height:var(--btn-h);
+    padding:0 16px;
+    border-radius:8px;
+    font-weight:600; font-size:14px;
+    border:1px solid #e5e7eb; cursor:pointer;
+  }
+  
+  /* Cancel */
+  .modal-actions .btn{ background:#2563eb; color:#111827; }
+  .modal-actions .btn:hover{ background:#f3f4f6; }
+  
+  /* Primary */
+  .modal-actions .btn-primary{
+    background:var(--ui-blue);
+    color:#fff; border-color:var(--ui-blue);
+    box-shadow:0 1px 2px rgba(0,0,0,.06);
+  }
+  .modal-actions .btn-primary:hover{ filter:brightness(.96); }
+  .modal-actions .btn-primary:disabled{ opacity:.6; cursor:not-allowed; }
+  

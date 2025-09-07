@@ -1,0 +1,45 @@
+/* ... CSS cho SalaryPage ... */
+.view-btn { background-color: #17a2b8; color: white; border:none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+
+/* Payslip Modal */
+.payslip-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+}
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.payslip-details .label { font-weight: bold; color: #555; }
+.payslip-details .value { font-weight: bold; }
+.payslip-grid { display: grid; gap: 15px; margin: 20px 0; }
+.payslip-item { display: flex; justify-content: space-between; padding: 10px; border-radius: 4px; }
+.payslip-item.income { background-color: #e9f7ef; }
+.payslip-item.income .value { color: #28a745; }
+.payslip-item.deduction { background-color: #fbe9e7; }
+.payslip-item.deduction .value { color: #dc3545; }
+.payslip-item.final { background-color: #e3f2fd; font-size: 1.2em; }
+.payslip-item.final .value { color: #007bff; }
+
+.adjust-btn { background-color: #ffc107; color: #333; border:none; padding: 8px 12px; border-radius: 4px; cursor: pointer; margin-left: 5px; }
+
+.adjustment-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+}
+.adjustment-form { display: flex; flex-direction: column; gap: 15px; }
+.adjustment-form label { font-weight: bold; color: #555; }
+.adjustment-form input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }

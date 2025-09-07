@@ -1,0 +1,147 @@
+/* src/components/hrm/EmployeeForm.css */
+
+.modal-backdrop { /* Đã được định nghĩa trong EmployeeProfilePage.css */
+  /* Giữ nguyên hoặc import chung từ một file modal.css */
+}
+
+.employee-form-content { /* Thẻ bao quanh toàn bộ nội dung form trong modal */
+  background: #ffffff;
+  padding: 30px; /* Tăng padding */
+  border-radius: 12px; /* Bo góc nhiều hơn */
+  width: 650px; /* Chiều rộng cố định */
+  max-width: 90%; /* Đảm bảo responsive */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn */
+  position: relative;
+  /* animation: fadeInScale 0.3s ease-out; /* Giữ animation nếu thích */
+}
+
+.employee-form-content h3 {
+  font-size: 24px; /* Kích thước tiêu đề */
+  color: #0d3b66;
+  margin-top: 0;
+  margin-bottom: 25px; /* Khoảng cách dưới tiêu đề */
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.employee-form form {
+  display: grid; /* Sử dụng grid để bố cục các input */
+  grid-template-columns: repeat(2, 1fr); /* 2 cột */
+  gap: 15px 20px; /* Khoảng cách giữa các hàng và cột */
+}
+
+.employee-form input,
+.employee-form select,
+.employee-form textarea {
+  padding: 12px 15px; /* Tăng padding */
+  font-size: 15px; /* Kích thước font */
+  border: 1px solid #ced4da;
+  border-radius: 8px; /* Bo góc nhẹ */
+  width: 100%; /* Đảm bảo full width trong grid cell */
+  box-sizing: border-box; /* Tính cả padding vào width */
+  background-color: #f8f9fa; /* Nền input nhạt */
+  color: #495057;
+}
+
+.employee-form label {
+  font-weight: 600; /* Chữ đậm hơn */
+  margin-bottom: 4px;
+  color: #34495e;
+  grid-column: span 2; /* Đảm bảo label chiếm 2 cột nếu không có input đi kèm */
+}
+
+/* Các trường input/select chiếm toàn bộ chiều rộng khi cần */
+.employee-form input[name="employee_code"],
+.employee-form input[name="full_name"],
+.employee-form input[name="email"],
+.employee-form select[name="company_id"],
+.employee-form select[name="role"],
+.employee-form input[name="username"],
+.employee-form input[name="password"] {
+  grid-column: span 2; /* Đảm bảo các trường quan trọng chiếm toàn bộ chiều rộng */
+}
+
+
+.employee-form-actions {
+  grid-column: span 2; /* Đảm bảo nút chiếm 2 cột để căn phải */
+  display: flex;
+  justify-content: flex-end; /* Căn nút sang phải */
+  gap: 15px; /* Khoảng cách giữa các nút */
+  margin-top: 25px; /* Khoảng cách với các input */
+}
+
+.employee-form-actions button {
+  padding: 12px 25px; /* Tăng padding nút */
+  font-size: 15px; /* Kích thước font nút */
+  border-radius: 8px; /* Bo góc nút */
+  border: none;
+  cursor: pointer;
+  font-weight: 600; /* Chữ đậm hơn */
+  transition: background-color 0.3s ease;
+}
+
+.employee-form-actions .save-btn {
+  background-color: #0d6efd; /* Màu xanh chủ đạo */
+  color: white;
+}
+.employee-form-actions .save-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.employee-form-actions .cancel-btn {
+  background-color: #6c757d; /* Màu xám cho nút hủy */
+  color: white;
+}
+.employee-form-actions .cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Style cho tải file và preview */
+.file-upload-label {
+  grid-column: span 2; /* Chiếm 2 cột */
+  display: block;
+  background-color: #e9ecef;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px dashed #ced4da;
+  cursor: pointer;
+  text-align: center;
+  font-size: 15px;
+  color: #495057;
+  transition: background-color 0.2s ease;
+}
+.file-upload-label:hover {
+  background-color: #dee2e6;
+}
+.file-upload-label input[type="file"] {
+  display: none; /* Ẩn input file gốc */
+}
+
+.preview-avatar-wrapper {
+  grid-column: span 2; /* Chiếm 2 cột */
+  text-align: center;
+  margin-top: 15px;
+}
+.preview-avatar {
+  max-width: 120px; /* Kích thước ảnh preview */
+  max-height: 120px;
+  border-radius: 50%; /* Ảnh tròn */
+  border: 3px solid #0d6efd; /* Viền xanh */
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .employee-form form {
+      grid-template-columns: 1fr; /* Một cột trên màn hình nhỏ */
+  }
+  .employee-form input,
+  .employee-form select,
+  .employee-form textarea,
+  .employee-form-actions,
+  .file-upload-label,
+  .preview-avatar-wrapper {
+      grid-column: span 1; /* Tất cả chiếm 1 cột */
+  }
+}

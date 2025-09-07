@@ -1,0 +1,63 @@
+/* File: src/components/profile/ProfilePage.css (Giao diện Bảng) */
+
+.profile-page-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.profile-page-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #1e293b;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.profile-table {
+    width: 100%;
+    border-collapse: collapse; /* Gộp các đường viền lại */
+    margin-bottom: 24px;
+}
+
+.profile-table td {
+    /* MÀU VIỀN NHẠT HƠN THEO YÊU CẦU */
+    border: 1px solid #e2e8f0; /* Slate-200 */
+    padding: 16px;
+    vertical-align: top; /* Căn nội dung lên trên cùng của ô */
+}
+
+.info-label {
+    display: block; /* Hiển thị trên một dòng riêng */
+    font-size: 0.875rem;
+    color: #64748b; /* Slate-500 */
+    margin-bottom: 8px;
+}
+
+.info-value {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #334155; /* Slate-700 */
+}
+
+.card-actions {
+    display: flex;
+    justify-content: center; /* Căn các nút về bên trái như trong mẫu */
+    gap: 12px;
+}
+
+.btn.btn--primary {
+    background-color: #3b82f6; /* Blue-500 */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn.btn--primary:hover {
+    background-color: #2563eb; /* Blue-600 */
+}

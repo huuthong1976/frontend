@@ -1,0 +1,154 @@
+/* -----------------------------------------------------------------------------
+   planning.css — Styles cho module Kế hoạch
+   Phân vùng: Variables • Layout • Toolbar • Buttons • Calendar • Modal • Drawer • Z-index
+----------------------------------------------------------------------------- */
+
+/* ========== Variables ========== */
+:root{
+  --color-border:#e5e7eb;
+  --color-primary:#2563eb;
+  --z-navbar:1100;
+  --z-dropdown:1200;
+  --z-toolbar:100;
+  --z-calendar:1;
+  --z-drawer:999;
+  --z-modal:1000;
+}
+
+/* ========== Layout ========== */
+.planning-page{ display:flex; flex-direction:column; gap:12px; }
+
+/* ========== Toolbar ========== */
+.planning-toolbar{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  position:relative; z-index: var(--z-toolbar);
+}
+.planning-toolbar .left{ display:flex; gap:8px; }
+.tab{ padding:8px 12px; border-radius:999px; background:#e5e7eb; cursor:pointer; }
+.tab.active{ background:var(--color-primary); color:#fff; }
+.planning-toolbar .center select{
+  padding:8px; border:1px solid var(--color-border); border-radius:8px; margin-right:8px;
+}
+
+/* Dropdown tự code (nếu dùng trong toolbar) */
+.planning-toolbar .dropdown{ position:relative; }
+.planning-toolbar .dropdown-menu{
+  position:absolute; top:100%; left:0; min-width:220px;
+  background:#fff; border:1px solid var(--color-border); border-radius:10px;
+  box-shadow:0 8px 30px rgba(0,0,0,.12); z-index: calc(var(--z-toolbar) + 10);
+  overflow:hidden;
+}
+
+/* ========== Buttons (dùng chung) ========== */
+.btn{ padding:8px 14px; border:1px solid var(--color-border); border-radius:8px; background:#fff; cursor:pointer; }
+.btn--primary{ background:var(--color-primary); color:#fff; border-color:var(--color-primary); }
+.btn--ghost{ background:#fff; color:var(--color-primary); border-color:var(--color-primary); }
+.btn--ghost:hover{ background:#eff6ff; }
+.btn--danger{ background:#dc2626; color:#fff; border-color:#dc2626; }
+.btn-split{ display:flex; gap:8px; flex-wrap:wrap; }
+
+/* ========== Calendar ========== */
+.calendar-wrapper{
+  position:relative; z-index: var(--z-calendar);
+  background:#fff; border:1px solid var(--color-border); border-radius:12px; padding:8px;
+  box-shadow:0 1px 2px rgba(0,0,0,.05);
+}
+/* Tránh FullCalendar sinh z-index quá cao */
+.fc, .fc *{ z-index:auto; }
+
+/* ========== Modal ========== */
+.modal-backdrop{
+  position:fixed; inset:0; background:rgba(15,23,42,.45);
+  display:flex; align-items:center; justify-content:center; z-index: var(--z-modal);
+}
+.modal-content{
+  width:min(820px,95vw); background:#fff; border-radius:12px; padding:18px;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+.modal-body{ display:grid; gap:10px; }
+.modal-body.grid2{ grid-template-columns:1fr 1fr; }
+.modal-body .full{ grid-column:1 / -1; }
+.modal-body label{ display:block; font-size:12px; color:#555; margin-bottom:6px; }
+.modal-body input, .modal-body select{
+  width:100%; padding:8px 10px; border:1px solid var(--color-border); border-radius:8px;
+}
+.modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:8px; }
+
+/* ========== Drawer ========== */
+.drawer{
+  position:fixed; inset:0; background:rgba(2,6,23,.3);
+  display:flex; justify-content:flex-end; z-index: var(--z-drawer);
+}
+.drawer__panel{
+  width:min(420px,92vw); background:#fff; height:100%; padding:16px;
+  box-shadow:-4px 0 24px rgba(0,0,0,.2); display:flex; flex-direction:column;
+}
+.drawer__header{ display:flex; align-items:center; justify-content:space-between; }
+.drawer__body{ flex:1; overflow:auto; }
+.drawer__actions{ display:flex; gap:10px; justify-content:flex-end; }
+
+/* ========== Conflict banners ========== */
+.conflict{ border-radius:8px; padding:8px 10px; }
+.conflict.warn{ background:#fff7ed; border:1px solid #fdba74; }
+.conflict.error{ background:#fef2f2; border:1px solid #fca5a5; }
+
+/* ===== Push calendar down from navbar ===== */
+:root { --navbar-height: 56px; }           /* nếu navbar khác 56px, chỉnh tại đây */
+.planning-page{
+  padding-top: 16px;                        /* khoảng cách nhỏ giữa menu và toolbar */
+  padding-bottom: 72px;                     /* chừa chỗ cho FAB */
+}
+.calendar-wrapper{                          /* đẩy riêng phần lịch xuống thêm */
+  margin-top: 12px;
+}
+
+/* ===== Floating 'Đăng ký lịch' button ===== */
+.fab-add-plan{
+  position: fixed;                          /* luôn nổi trên màn hình */
+  right: 24px;
+  bottom: 24px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--color-primary);
+  color: #fff;
+  border: none; border-radius: 999px;
+  padding: 12px 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  cursor: pointer;
+  z-index: 1200;                            /* cao hơn calendar & toolbar */
+}
+.fab-add-plan:hover{ filter: brightness(1.05); }
+.fab-add-plan .icon{ font-size: 18px; line-height: 1; }
+.fab-add-plan .label{ font-weight: 600; }
+
+@media (max-width: 640px){
+  .fab-add-plan .label{ display: none; }    /* mobile chỉ hiện icon để gọn */
+}
+
+/* ======= FIX DROPDOWN BỊ CHE BỞI LỊCH (QUAN TRỌNG) ======= */
+
+/* 1) Toolbar & bản thân select phải ở z-index rất cao */
+.planning-toolbar{
+  position: sticky;                         /* bám theo header */
+  top: calc(var(--navbar-height) + 8px);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.06);
+  z-index: 3000;                            /* >> mọi lớp của FullCalendar */
+}
+.planning-toolbar select{
+  position: relative;
+  z-index: 3001;                            /* menu của select sẽ nằm trên lưới */
+}
+
+/* 2) Calendar và các lớp con phải thấp hơn */
+.calendar-wrap,
+.fc { position: relative; z-index: 1; }
+
+.fc .fc-view-harness,
+.fc .fc-view-harness-active,
+.fc .fc-scrollgrid {
+  z-index: 1 !important;
+}
+
+/* 3) Tránh ancestor cắt dropdown */
+.planning-page { overflow: visible; }

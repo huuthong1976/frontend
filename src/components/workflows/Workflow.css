@@ -1,0 +1,16 @@
+.workflow-container { width: 90%; max-width: 800px; margin: 20px auto; }
+.proposal-form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.proposal-form-container form { display: flex; flex-direction: column; gap: 15px; }
+.proposal-form-container label { font-weight: bold; }
+.proposal-form-container input, .proposal-form-container textarea { padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+.proposal-form-container button { padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+
+.inbox-list { display: flex; flex-direction: column; gap: 20px; }
+.proposal-card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.proposal-card h3 { margin-top: 0; }
+.action-area { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+.action-area button { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+.approve-btn { background-color: #28a745; color: white; }
+.reject-btn { background-color: #dc3545; color: white; }
+.reject-section { display: flex; gap: 10px; }
+.reject-section input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }

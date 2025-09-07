@@ -1,0 +1,138 @@
+/* src/pages/CompanyMonthlyResultPage.module.css */
+
+/* === Bố cục chung & Card chính === */
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Tăng khoảng cách giữa các khối cho thoáng hơn */
+}
+
+.pageTitle {
+  color: #1a237e; /* Màu xanh đậm cho tiêu đề chính */
+  font-weight: 600;
+  border-bottom: 2px solid #e8eaf6;
+  padding-bottom: 16px;
+}
+
+.filterCard, .kpiCard {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e8eaf6;
+  background-color: #ffffff;
+}
+
+.filterCard .ant-card-body {
+  padding: 20px 24px !important;
+}
+
+/* === Bảng dữ liệu KPI === */
+.kpiCard .ant-card-head {
+  background-color: #f8f9fa; /* Màu nền nhẹ cho tiêu đề khía cạnh */
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.kpiCard .ant-card-head-title {
+  color: #accff3;
+  font-weight: 500;
+  padding: 12px 0 !important; /* Điều chỉnh padding */
+}
+
+.kpiCard .ant-table {
+  border-radius: 0 0 12px 12px;
+  overflow: hidden; /* Đảm bảo table bo góc đúng */
+}
+
+/* Canh giữa tiêu đề cột và nội dung cột số liệu */
+.kpiCard .ant-table-thead > tr > th {
+  background-color: #6b7eee !important; /* Màu nền cho header bảng */
+  color: #1a237e !important; /* Màu chữ cho header */
+  font-weight: 600;
+  text-align: center !important; /* Canh giữa tiêu đề */
+  border-bottom: 2px solid #c5cae9 !important;
+}
+
+.kpiCard .ant-table-tbody > tr > td {
+  vertical-align: middle; /* Canh giữa theo chiều dọc */
+  transition: background-color 0.3s;
+}
+
+/* Cột "Tên KPI" canh trái, các cột còn lại canh giữa */
+.kpiCard .ant-table-tbody > tr > td:not(:first-child) {
+  text-align: center !important;
+}
+
+.kpiCard .ant-table-tbody > tr > td:first-child {
+  text-align: left;
+  font-weight: 500; /* In đậm nhẹ tên KPI */
+}
+
+/* Hiệu ứng hover cho hàng */
+.kpiCard .ant-table-tbody > tr:hover > td {
+  background-color: #f1f3f5 !important;
+}
+
+/* Điều chỉnh InputNumber */
+.kpiCard .ant-input-number {
+  text-align: center !important; /* Canh giữa số trong input */
+}
+
+/* === Các thành phần khác === */
+
+/* Chỉ số tổng điểm */
+.summaryStatistic .ant-statistic-title {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.summaryStatistic .ant-statistic-content {
+  font-size: 28px;
+  font-weight: 700;
+  color: #28a745; /* Màu xanh lá cho điểm số nổi bật */
+}
+
+.summaryStatistic .ant-statistic-content-suffix {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Nút Lưu */
+.saveButtonContainer {
+  text-align: right;
+  margin-top: 24px;
+}
+
+.saveButton {
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+  transition: all 0.3s ease;
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
+}
+
+/* Hiệu ứng loading và Empty */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+}
+
+.emptyContainer {
+  padding: 40px;
+}
+.aspect-row {
+  background-color: #f0f2f5;
+  font-weight: bold;
+}
+
+.aspect-row > td {
+  border-bottom: 2px solid #d9d9d9 !important;
+}

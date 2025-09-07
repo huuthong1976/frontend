@@ -1,0 +1,77 @@
+/* src/components/hrm/HrmDashboard.css */
+/* Các style đặc thù cho HrmDashboard */
+
+.hrm-container h1 { /* Đảm bảo h1 trong HrmDashboard có style riêng nếu cần */
+    font-size: 32px;
+    font-weight: 700;
+    color: #0d6efd; /* Màu chủ đạo */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between; /* Căn giữa các mục trong toolbar */
+    align-items: center;
+    margin-bottom: 25px;
+    background-color: #f8f9fa; /* Nền nhẹ nhàng cho toolbar */
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+}
+
+.toolbar input[type="text"] {
+    flex-grow: 1; /* Cho phép input mở rộng */
+    max-width: 400px; /* Giới hạn chiều rộng input */
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #495057;
+}
+
+.toolbar .action-btn.add {
+    background-color: #28a745; /* Nút thêm màu xanh lá */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toolbar .action-btn.add:hover {
+    background-color: #218838;
+}
+
+/* Các style cho bảng và nút hành động trong bảng */
+/* Sử dụng lại các class từ Admin.css để đồng bộ */
+/* Các nút action-btn trong bảng sẽ được style qua Admin.css (vì HrmDashboard.js dùng Admin.css) */
+
+.status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+.status-Đang-làm-việc { /* Sửa từ status-active */
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-Đã-nghỉ-việc { /* Sửa từ status-inactive */
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Modal styles (sẽ được định nghĩa chung trong EmployeeForm.css nếu EmployeeForm là modal) */
+/* Nếu modal backdrop và modal content được sử dụng trực tiếp trong HrmDashboard.js,
+   thì các style này cần được giữ lại trong EmployeeProfilePage.css (mà HrmDashboard.js import)
+   hoặc tạo một file modal.css riêng.
+   Trong trường hợp này, HrmDashboard.js import EmployeeProfilePage.css, nên chúng sẽ dùng style đó. */

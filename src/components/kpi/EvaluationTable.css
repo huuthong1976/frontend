@@ -1,0 +1,80 @@
+.table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    overflow-x: auto; /* Cho phép cuộn ngang trên màn hình nhỏ */
+}
+
+.evaluation-table {
+    width: 100%;
+    border-collapse: collapse; /* Gộp đường viền */
+}
+
+.evaluation-table th,
+.evaluation-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.evaluation-table thead th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+    color: #444;
+    cursor: pointer;
+    user-select: none; /* Không cho phép chọn text */
+}
+
+.evaluation-table thead th:hover {
+    background-color: #e9e9e9;
+}
+
+.evaluation-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.evaluation-table tbody tr:hover {
+    background-color: #f0f8ff; /* Màu xanh nhạt khi hover */
+}
+
+.table-state {
+    text-align: center !important;
+    padding: 40px;
+    font-size: 1.1rem;
+    color: #888;
+}
+
+.table-state.error {
+    color: var(--danger-color);
+}
+
+/* --- Status Badge Styles --- */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap; /* Không xuống dòng */
+}
+
+.status--chua-lap-ke-hoach,
+.status--chua-tao {
+    background-color: #6c757d; /* Xám */
+}
+.status--moi-tao {
+    background-color: #17a2b8; /* Xanh ngọc */
+}
+.status--cho-tu-cham {
+    background-color: #fd7e14; /* Cam */
+}
+.status--cho-ql-cham {
+    background-color: #ffc107; /* Vàng */
+    color: #333;
+}
+.status--cho-tgd-cham {
+    background-color: #dc3545; /* Đỏ */
+}
+.status--hoan-thanh {
+    background-color: #28a745; /* Xanh lá */
+}
