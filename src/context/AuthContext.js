@@ -12,15 +12,17 @@ export const AuthProvider = ({ children }) => {
   const loadUser = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
-      if (!token) return;
-      // api đã có interceptor gắn Authorization nếu có token
-      const res = await api.get('/api/auth/me');
-      // chấp nhận cả 2 dạng: { user: {...} } hoặc {...}
+      if (!token) { setLoading(false); return; }
+      const res = await api.get('/api/auth/me'); // hoặc endpoint me của bạn
       setUser(res.data?.user ?? res.data ?? null);
     } catch (err) {
-      console.error('Token không hợp lệ/hết hạn:', err?.response?.data || err.message);
-      localStorage.removeItem('token');
-      setUser(null);
+      const status = err?.response?.status;
+      if (status === 401) {
+        localStorage.removeItem('token');
+        setUser(null);
+      } else {
+        console.warn('loadUser failed:', err.message || err);
+      }
     } finally {
       setLoading(false);
     }
