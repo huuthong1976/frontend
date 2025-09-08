@@ -1,34 +1,31 @@
-// src/utils/api.js
+// src/utils/api.js (bản cải tiến gợi ý)
 import axios from "axios";
 
 const API_ROOT = (process.env.REACT_APP_API_URL || "").replace(/\/+$/, "");
 
 const api = axios.create({
-  baseURL: API_ROOT,               // giữ nguyên domain Railway
-  // withCredentials: true,        // bật nếu dùng cookie
+  baseURL: API_ROOT,
+  timeout: 15000, // tuỳ chọn
 });
 
-// Gắn JWT nếu có
 api.interceptors.request.use((cfg) => {
-  // Auto-prefix /api nếu url chưa có
   const u = cfg.url || "";
-  if (typeof u === "string" && !u.startsWith("/api/")) {
+  // chỉ prefix nếu là đường dẫn tương đối và chưa có /api/
+  if (typeof u === "string" && !/^https?:\/\//i.test(u) && !u.startsWith("/api/")) {
     cfg.url = `/api${u.startsWith("/") ? "" : "/"}${u}`;
   }
-
   const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   if (token) cfg.headers.Authorization = `Bearer ${token}`;
   return cfg;
 });
 
-// (tuỳ chọn) Nếu 401 thì xoá token và về /login
 api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err?.response?.status === 401) {
       localStorage.removeItem("token");
       sessionStorage.removeItem("token");
-      // window.location.href = "/login"; // nếu muốn
+      // window.location.href = "/login";
     }
     return Promise.reject(err);
   }
