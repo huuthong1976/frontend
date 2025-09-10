@@ -13,7 +13,7 @@ import {
   Typography,
 } from 'antd';
 import dayjs from 'dayjs';
-import api from 'utils/api'; // Sử dụng file cấu hình axios chung
+import api from '../utils/api'; // Sử dụng file cấu hình axios chung
 
 const { Option } = Select;
 
