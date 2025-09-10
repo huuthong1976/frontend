@@ -1,7 +1,7 @@
 // src/pages/ProfilePage.js
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Select, Button, notification, DatePicker, Row, Col, Card } from 'antd';
-import api from 'utils/api'; // Giả sử đã có file api để gọi backend
+import api from '../utils/api'; // Giả sử đã có file api để gọi backend
 import moment from 'moment';
 import './ProfilePage.css';
 
