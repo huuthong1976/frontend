@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-import api from '../../utils/api';
+import api from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import EmployeeForm from './EmployeeForm'; // Import form component
