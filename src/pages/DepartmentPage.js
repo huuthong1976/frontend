@@ -3,7 +3,7 @@ import React, { useState,useEffect } from 'react';
 import { Card, Table, Button, Modal, Form, Input, Select, Popconfirm, Space } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDepartments } from '../hooks/useDepartments';
-import api from 'utils/api';
+import api from '../utils/api';
 
 const { Option } = Select;
 
