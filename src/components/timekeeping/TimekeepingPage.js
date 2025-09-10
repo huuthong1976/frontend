@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import './Timekeeping.css';
 import moment from 'moment';
-import api from 'utils/api'
+import api from '../utils/api'
 
 const API_URL = 'http://localhost:5000/api/timekeeping';
 // Giả định API này tồn tại và trả về danh sách nhân viên và công ty
