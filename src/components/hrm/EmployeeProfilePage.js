@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Avatar, Descriptions, Tabs, Button, Spin, Modal, notification, Table, Tag } from 'antd';
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons';
-import api from '../../utils/api';
+import api from '../utils/api';
 import { useAuth } from '../../context/AuthContext';
 import EmployeeForm from './EmployeeForm';
 import moment from 'moment';
