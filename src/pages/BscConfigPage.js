@@ -7,7 +7,7 @@ import {
   Row, Col, Alert, Spin, Select, Empty
 } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import api from 'utils/api';
+import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 
 const { Title, Text } = Typography;
