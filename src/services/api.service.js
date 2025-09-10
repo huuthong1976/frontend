@@ -2,7 +2,7 @@
 import axios from 'axios';
 import apiClient from './apiClient';
 import axiosInstance from './axios.config';
-import api from 'utils/api';
+import api from '../utils/api';
 const API_BASE_URL = 'http://localhost:5000/api'; // dùng cho axios thuần khi tải file
 
 // ================== API chính ==================
