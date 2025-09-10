@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useRef, useCallback } from 'react';
-import api from '../../utils/api';
+import api from '../utils/api';
 import PayslipModal from './PayslipModal';
 import './PayrollDashboard.css';
 import { FaFileImport, FaFileExport, FaDownload, FaCalculator, FaSave, FaEye } from 'react-icons/fa';
