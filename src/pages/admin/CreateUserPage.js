@@ -5,7 +5,7 @@ import { Card, Form, Input, Button, Select, DatePicker, message, Row, Col } from
 // THAY ĐỔI 1: Import apiService thay vì api và đường dẫn có thể cần điều chỉnh
 import { apiService } from '../../services/apiService';
 
-const { Option } = Select;
+//const { Option } = Select;
 
 const CreateUserPage = () => {
     const [form] = Form.useForm();
@@ -50,7 +50,7 @@ const CreateUserPage = () => {
             setLoading(false);
         }
     };
-
+    
     // Phần JSX (giao diện) bên dưới không cần thay đổi gì
     return (
         <Card title="Thêm người dùng mới">
@@ -89,7 +89,7 @@ const CreateUserPage = () => {
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item name="position_id" label="Chức vụ" rules={[{ required: true, message: 'Vui lòng chọn chức vụ!' }]}>
+                        <Form.Item name="id" label="Chức vụ" rules={[{ required: true, message: 'Vui lòng chọn chức vụ!' }]}>
                         <Select
                             placeholder="Chọn chức vụ"
                             options={positions.map(p => ({

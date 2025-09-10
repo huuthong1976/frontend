@@ -78,28 +78,41 @@
     margin-bottom: 15px;
     font-size: 0.9rem;
   }
-  .password-wrapper {
-    position: relative;
-  }
-  
-  .password-wrapper input {
-    width: 100%;
-    padding-right: 40px; /* chừa chỗ cho nút con mắt */
-  }
-  
-  .toggle-eye {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    color: #64748b;         /* slate-500 */
-    padding: 4px;
-    line-height: 0;
-  }
-  
-  .toggle-eye:hover { color: #0f172a; } /* slate-900 */
-  .toggle-eye:focus { outline: 2px solid #3b82f6; border-radius: 6px; }
-  
+  /* frontend/components/auth/LoginPage.css */
+
+/* ... (các CSS khác của bạn) ... */
+
+.input-group {
+  position: relative; /* Đảm bảo đây là parent để icon định vị */
+  margin-bottom: 20px; /* Khoảng cách giữa các input group */
+  /* Đảm bảo input và label không làm vỡ cấu trúc */
+  display: flex; /* Dùng flexbox để quản lý label và input tốt hơn */
+  flex-direction: column; /* Đặt label trên input */
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 40px 10px 15px; /* Tăng padding phải để chừa chỗ cho icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box; /* Quan trọng: để padding không làm tăng chiều rộng tổng */
+}
+
+.password-toggle-icon {
+  position: absolute;
+  /* Điều chỉnh top để icon nằm giữa ô input */
+  top: 60%; /* Tùy chỉnh giá trị này nếu cần */ 
+  right: 15px; /* Khoảng cách từ bên phải ô input */
+  transform: translateY(-50%); /* Luôn căn giữa theo chiều dọc */
+  cursor: pointer;
+  color: #888;
+  font-size: 1.2rem;
+  z-index: 10; /* Đảm bảo icon nằm trên input */
+}
+
+/* Điều chỉnh lại label nếu cần */
+.input-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}

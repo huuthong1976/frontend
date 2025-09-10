@@ -2,9 +2,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Card, Table, Button, Modal, Form, Input, InputNumber, Popconfirm, Space, Tooltip, Typography, message } from 'antd';
 import { PlusOutlined, DeleteOutlined, SendOutlined, EditOutlined } from '@ant-design/icons';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-
+import api from '../utils/api'; 
 const { Title, Text } = Typography;
 
 const KpiPlanCreator = ({ month, year, onCreationSuccess }) => {
@@ -84,7 +83,7 @@ const KpiPlanCreator = ({ month, year, onCreationSuccess }) => {
                     weight: item.weight,
                 })),
             };
-            await axios.post('/api/kpi/my-plan', dataToSave);
+            await api.post('/kpi/my-plan', dataToSave);
             message.success('Đăng ký kế hoạch thành công!');
             onCreationSuccess();
         } catch (err) {

@@ -1,85 +1,80 @@
 // src/context/AuthContext.js
 import React, { createContext, useState, useEffect, useCallback, useContext } from 'react';
-import api from '../utils/api';
+import api from '../utils/api'; 
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  // Load thông tin user nếu đã có token
-  const loadUser = useCallback(async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) { setLoading(false); return; }
-      const res = await api.get('/api/auth/me'); // hoặc endpoint me của bạn
-      setUser(res.data?.user ?? res.data ?? null);
-    } catch (err) {
-      const status = err?.response?.status;
-      if (status === 401) {
+    // ✅ CẢI TIẾN: Không cần hàm setAuthToken riêng lẻ nữa, Interceptor sẽ tự xử lý.
+
+    const loadUser = useCallback(async () => {
+        // Interceptor đã tự động thêm token nếu có
+        if (localStorage.getItem('token')) {
+            try {
+                // ✅ THAY ĐỔI: Dùng `api` và đường dẫn tương đối
+                const res = await api.get('/auth/me');
+                setUser(res.data);
+            } catch (err) {
+                console.error("Token không hợp lệ hoặc đã hết hạn.", err);
+                // Tự động logout nếu token sai
+                localStorage.removeItem('token');
+                setUser(null);
+            }
+        }
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        loadUser();
+    }, [loadUser]);
+
+    const login = async (username, password) => {
+        try {
+            // ✅ THAY ĐỔI: Dùng `api` và đường dẫn tương đối
+            const res = await api.post('/auth/login', { username, password });
+            const { accessToken, user } = res.data;
+            if (accessToken) {
+            localStorage.setItem('token', accessToken);
+            setUser(user);
+            return { success: true, user };
+        } else {
+            return { success: false, error: 'Không nhận được token từ server.' };
+        }
+        } catch (error) {
+            // Khi đăng nhập sai, chỉ cần xóa token cũ (nếu có)
+            localStorage.removeItem('token');
+            setUser(null);
+            return { success: false, error: error.response?.data?.msg || 'Đăng nhập thất bại' };
+        }
+    };
+
+    const logout = () => {
         localStorage.removeItem('token');
         setUser(null);
-      } else {
-        console.warn('loadUser failed:', err.message || err);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    };
 
-  useEffect(() => { loadUser(); }, [loadUser]);
+    // Tính toán giá trị isAuthenticated trực tiếp từ state `user`
+    const isAuthenticated = !!user;
 
-  // identifier = username hoặc email
-  const login = async (identifier, password) => {
-    try {
-      // gửi cả username & email để BE match theo 1 trong 2 trường
-      const res = await api.post('/api/auth/login', {
-        username: identifier,
-        email: identifier,
-        password,
-      });
-
-      // token có thể là 'accessToken' hoặc 'token'
-      const token = res.data?.accessToken || res.data?.token;
-      const me = res.data?.user ?? null;
-
-      if (!token) {
-        return { success: false, error: 'Không nhận được token từ server.' };
-      }
-
-      localStorage.setItem('token', token);
-      setUser(me);
-      return { success: true, user: me };
-    } catch (error) {
-      localStorage.removeItem('token');
-      setUser(null);
-      const msg =
-        error?.response?.data?.message ||
-        error?.response?.data?.msg ||
-        'Đăng nhập thất bại';
-      return { success: false, error: msg };
-    }
-  };
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
-  };
-
-  return (
-    <AuthContext.Provider
-      value={{
+    const value = {
         user,
         loading,
-        isAuthenticated: !!user,
+        isAuthenticated,
         login,
         logout,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+    };
+
+    return (
+        <AuthContext.Provider value={value}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
-export const useAuth = () => useContext(AuthContext);
+// Hook tùy chỉnh để sử dụng context dễ dàng hơn
+export const useAuth = () => {
+    return useContext(AuthContext);
+};

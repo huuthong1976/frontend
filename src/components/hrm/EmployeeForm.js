@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Select, DatePicker, Button, Upload, notification, Row, Col, Space } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import api from '../../utils/api';
+import api from 'utils/api';
 import moment from 'moment';
 
 const { Option } = Select;
@@ -11,7 +11,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || '';
 
 const EmployeeForm = ({ onSuccess, onClose, employee }) => {
     const [form] = Form.useForm();
-    const [fileList, setFileList] = useState([]);
+    const [ setFileList] = useState([]);
     const [dropdownData, setDropdownData] = useState({ companies: [], departments: [], positions: [], managers: [] });
     const [loading, setLoading] = useState(false);
     

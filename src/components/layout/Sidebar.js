@@ -14,7 +14,7 @@ const menuConfig = (user) => [
         children: [
             { name: 'KPI của tôi', path: '/my-kpi' },
             { name: 'Hồ sơ cá nhân', path: '/my-profile' },
-            { name: 'Bảng chấm công', path: '/my-timesheet' },
+            { name: 'Bảng chấm công', path: '' },
             { name: 'Đề xuất', path: '' },
             { name: 'Nhật ký', path: '' },
         ]
