@@ -14,7 +14,7 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
-env:
+# env:
   # (Tuỳ chọn) Biến môi trường cho build frontend gọi API backend
   # REACT_APP_API_BASE: https://backend-production-bc73.up.railway.app
 
