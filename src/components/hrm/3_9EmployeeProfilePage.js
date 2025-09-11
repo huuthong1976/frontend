@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../utils/api';
+import api from '../../utils/api';
 import AuthContext from '../../context/AuthContext';
 import EmployeeForm from './EmployeeForm';
 import './HrmStyle.css'; // Import file CSS chung
