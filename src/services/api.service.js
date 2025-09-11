@@ -3,8 +3,12 @@ import axios from 'axios';
 import apiClient from './apiClient';
 import axiosInstance from './axios.config';
 import api from 'utils/api';
-const API_BASE_URL = 'http://localhost:5000/api'; // dùng cho axios thuần khi tải file
-
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+import axios from "axios";
+export const api = axios.create({
+  baseURL,
+  withCredentials: true, 
+});
 // ================== API chính ==================
 export const getUnitKpiRegistrations = async (companyId, year) => {
   // Gọi đến API GET /api/unit-kpi/registrations mà chúng ta đã tạo
