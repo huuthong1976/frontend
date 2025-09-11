@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../utils/api';
+import api from 'utils/api';
 
 
 export default function PlanningToolbar({ mode, onModeChange, filters, onFiltersChange, canCreate, onCreateWeek, onCreateMonth, onCreateWork }) {
