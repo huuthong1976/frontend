@@ -2,67 +2,27 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
-  "dependencies": {
-    "@ant-design/icons": "^6.0.0",
-    "@ant-design/plots": "^2.6.3",
-    "@antv/g2-extension-plot": "^0.2.2",
-    "@antv/scale": "^0.5.0",
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^7.0.0",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "@fullcalendar/daygrid": "^6.1.19",
-    "@fullcalendar/interaction": "^6.1.19",
-    "@fullcalendar/multimonth": "^6.1.19",
-    "@fullcalendar/react": "^6.1.19",
-    "@fullcalendar/timegrid": "^6.1.19",
-    "@hello-pangea/dnd": "^18.0.1",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "antd": "^5.27.1",
-    "apexcharts": "^5.3.4",
-    "axios": "^1.11.0",
-    "chart.js": "^4.5.0",
-    "express-validator": "^7.2.1",
-    "html2canvas": "^1.4.1",
-    "jsonwebtoken": "^9.0.2",
-    "jspdf": "^2.5.2",
-    "jspdf-autotable": "^3.8.4",
-    "jwt-decode": "^4.0.0",
-    "moment": "^2.30.1",
-    "react": "^19.1.0",
-    "react-apexcharts": "^1.7.0",
-    "react-chartjs-2": "^5.3.0",
-    "react-dom": "^19.1.0",
-    "react-icons": "^5.5.0",
-    "react-router-dom": "^7.6.3",
-    "react-scripts": "5.0.1",
-    "recharts": "^3.1.0",
-    "web-vitals": "^2.1.4",
-    "xlsx": "^0.18.5"
-  },
+
+  "homepage": "https://thoidaiso.info.vn",
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-   
-  "homepage": "https://thoidaiso.info.vn"
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+
+  "dependencies": {
+    "react-scripts": "5.0.1"
+    /* thêm các deps khác của bạn ở đây, nhớ ngăn cách bằng dấu phẩy và KHÔNG để dấu phẩy sau phần tử cuối */
   },
+
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
+  },
+
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -70,3 +30,4 @@
     ]
   }
 }
+
