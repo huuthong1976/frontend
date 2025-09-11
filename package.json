@@ -2,23 +2,20 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-
   "homepage": "https://thoidaiso.info.vn",
-
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
     "@ant-design/plots": "^2.6.3",
     "@antv/g2-extension-plot": "^0.2.2",
     "@antv/scale": "^0.5.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@fullcalendar/daygrid": "^6.1.19",
     "@fullcalendar/interaction": "^6.1.19",
@@ -26,10 +23,6 @@
     "@fullcalendar/react": "^6.1.19",
     "@fullcalendar/timegrid": "^6.1.19",
     "@hello-pangea/dnd": "^18.0.1",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
     "antd": "^5.27.1",
     "apexcharts": "^5.3.4",
     "axios": "^1.11.0",
@@ -41,22 +34,26 @@
     "jspdf-autotable": "^3.8.4",
     "jwt-decode": "^4.0.0",
     "moment": "^2.30.1",
-    "react": "^19.1.0",
+    "react": "18.3.1",
     "react-apexcharts": "^1.7.0",
     "react-chartjs-2": "^5.3.0",
-    "react-dom": "^19.1.0",
+    "react-dom": "18.3.1",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.6.3",
+    "react-router-dom": "6.26.1",
     "react-scripts": "5.0.1",
     "recharts": "^3.1.0",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
-
+  "devDependencies": {
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^14.3.1",
+    "@testing-library/user-event": "^14.5.2"
+  },
   "eslintConfig": {
     "extends": ["react-app", "react-app/jest"]
   },
-
   "browserslist": {
     "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
@@ -66,4 +63,3 @@
     ]
   }
 }
-
