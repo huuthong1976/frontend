@@ -54,6 +54,7 @@ function App() {
           {/* === PUBLIC ROUTES === */}
           <Route element={<PublicLayout />}>
             <Route path="/login" element={<LoginPage />} />
+             <Route path="/" element={<Navigate to="/login" replace />} />
           </Route>
 
           {/* === PRIVATE ROUTES === */}
