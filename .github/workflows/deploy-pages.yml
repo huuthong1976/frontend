@@ -3,7 +3,7 @@ name: Deploy React (CRA) to GitHub Pages
 on:
   push:
     branches: [ "main" ]   # Tự chạy khi push vào main
-  workflow_dispatch:        # Vẫn cho phép chạy thủ công
+  workflow_dispatch:        # Cho phép chạy thủ công
 
 permissions:
   contents: read
@@ -14,9 +14,8 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
-env:
-  # Nếu cần biến môi trường cho frontend gọi API, khai báo ở đây:
-  # REACT_APP_API_BASE: https://backend-production-bc73.up.railway.app
+# env:                          # Bật nếu cần biến môi trường khi build
+#   REACT_APP_API_BASE: https://backend-production-bc73.up.railway.app
 
 jobs:
   build:
@@ -28,7 +27,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "18"   # CRA 5 chạy ổn nhất trên Node 18
+          node-version: "18"     # CRA 5 chạy ổn với Node 18
           cache: "npm"
 
       - name: Install deps
@@ -40,7 +39,7 @@ jobs:
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build   # CRA xuất ra thư mục build/
+          path: ./build          # CRA xuất ra thư mục build/
 
   deploy:
     needs: build
@@ -52,3 +51,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
