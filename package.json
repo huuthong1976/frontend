@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "huuthong1976.github.io/frontend",
+  "homepage": "https://huuthong1976.github.io/frontend",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
