@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://thoidaiso.info.vn",
+  "homepage": "huuthong1976.github.io/frontend",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
