@@ -1,5 +1,4 @@
 import React, { useReducer, useMemo, useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import {
     Card, Table, Button, Modal, Form, Input, Popconfirm, Space, Tooltip,
     Typography, Tag, Row, Col, Statistic, Divider, InputNumber, Timeline, message, Alert, DatePicker, Spin
@@ -172,7 +171,7 @@ const KpiPlanPage = () => {
     const handleDeleteItem = async (itemId) => {
         dispatch({ type: 'SET_LOADING', payload: true });
         try {
-            await axios.delete(`/api/kpi/my-plan/${itemId}`);
+            await api.delete(`/kpi/my-plan/${itemId}`);
             message.success('Xóa công việc thành công!');
             fetchPlan();
         } catch (err) {
@@ -188,11 +187,12 @@ const KpiPlanPage = () => {
         }
         dispatch({ type: 'SET_LOADING', payload: true });
         try {
-            const response = await axios.post(`/api/kpi/my-plan/submit-assessment`, { 
+            const response = await api.post(`/kpi/my-plan/submit-assessment`, {
                 planId: plan.id, 
                 items: plan.items,
                 userRole: currentUser.role
             });
+
             message.success(response.data.message || 'Nộp đánh giá thành công!');
             fetchPlan();
         } catch (err) {

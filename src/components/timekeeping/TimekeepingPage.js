@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './Timekeeping.css';
 import moment from 'moment';
+import api from 'utils/api'
 
 const API_URL = 'http://localhost:5000/api/timekeeping';
 // Giả định API này tồn tại và trả về danh sách nhân viên và công ty
-const HRM_API_URL = 'http://localhost:5000/api'; 
+
 
 // --- Component nhỏ: Biểu tượng loading cho Timer ---
 const TimerLoading = () => (
@@ -76,12 +76,13 @@ const TimekeepingPage = () => {
         if (canAccessAllTimesheetsFeature) {
             try {
                 // Giả định API trả về mảng các đối tượng {id, full_name, employee_code, ...}
-                const employeesRes = await axios.get(`${HRM_API_URL}/employees`); 
-                setAllEmployees(employeesRes.data);
+                const employeesRes = await api.get('/employees'); 
+                console.log('API response for employees:', employeesRes.data); 
+                (() => { const _d = employeesRes?.data; const _arr = Array.isArray(_d?.results) ? _d.results : Array.isArray(_d) ? _d : []; setAllEmployees(_arr); })();
 
                 // Giả định API trả về mảng các đối tượng {id, company_name, ...}
-                const companiesRes = await axios.get(`${HRM_API_URL}/companies`); 
-                setCompanies(companiesRes.data);
+                const companiesRes = await api.get('/companies'); 
+                (() => { const _d = companiesRes?.data; const _arr = Array.isArray(_d?.results) ? _d.results : Array.isArray(_d) ? _d : []; setCompanies(_arr); })();
             } catch (error) {
                 console.error("Lỗi tải dữ liệu dropdown lọc:", error);
             }
@@ -95,7 +96,7 @@ const TimekeepingPage = () => {
             let res;
             if (showAllTimesheets && canAccessAllTimesheetsFeature) {
                 // Gọi API lấy tất cả chấm công với bộ lọc
-                res = await axios.get(`${API_URL}/all-timesheets`, {
+                res = await api.get(`${API_URL}/all-timesheets`, {
                     params: {
                         year: filterYear,
                         month: filterMonth,
@@ -106,7 +107,7 @@ const TimekeepingPage = () => {
                 setTodayRecord(null); // Không hiển thị widget chấm công cá nhân khi xem toàn bộ
             } else { 
                 // Gọi API lấy chấm công của bản thân
-                res = await axios.get(`${API_URL}/my-timesheet`, {
+                res = await api.get(`${API_URL}/my-timesheet`, {
                     params: { year: filterYear, month: filterMonth }
                 });
                 // Cập nhật todayRecord chỉ khi đang xem lịch sử cá nhân
@@ -114,7 +115,7 @@ const TimekeepingPage = () => {
                 const record = res.data.find(r => moment(r.work_date).format('YYYY-MM-DD') === todayStr);
                 setTodayRecord(record || null);
             }
-            setTimesheet(res.data); // Cập nhật dữ liệu bảng lịch sử
+            (() => { const _p = res?.data; const _list = Array.isArray(_p) ? _p : Array.isArray(_p?.results) ? _p.results : []; setTimesheet(_list); })(); // Cập nhật dữ liệu bảng lịch sử
 
         } catch (error) {
             console.error("Lỗi tải lịch sử chấm công:", error.response?.data?.msg || error);
@@ -149,7 +150,7 @@ const TimekeepingPage = () => {
 
         try {
             const device_info = getDeviceType();
-            const res = await axios.post(`${API_URL}/checkin`, { device_info });
+            const res = await api.post(`${API_URL}/checkin`, { device_info });
             alert(res.data.msg);
             await fetchTimesheetHistory(); // Cập nhật lại dữ liệu sau khi check-in
         } catch (error) {
@@ -171,7 +172,7 @@ const TimekeepingPage = () => {
 
         try {
             const device_info = getDeviceType();
-            const res = await axios.put(`${API_URL}/checkout/${todayRecord.id}`, { device_info });
+            const res = await api.put(`${API_URL}/checkout/${todayRecord.id}`, { device_info });
             alert(res.data.msg);
             await fetchTimesheetHistory(); // Cập nhật lại dữ liệu sau khi check-out
         } catch (error) {
@@ -251,7 +252,7 @@ const TimekeepingPage = () => {
                         {todayRecord?.working_hours !== null && todayRecord?.working_hours !== undefined && (
                             <div className="time-record">
                                 <span>Tổng giờ:</span>
-                                <strong>{`${todayRecord.working_hours} giờ`}</strong>
+                                <strong>{`${(todayRecord?.work_hours ?? todayRecord?.working_hours)} giờ`}</strong>
                             </div>
                         )}
                     </div>
@@ -279,7 +280,7 @@ const TimekeepingPage = () => {
                         {showAllTimesheets && (
                             <select value={filterEmployee} onChange={e => setFilterEmployee(e.target.value)}>
                                 <option value="">Tất cả nhân viên</option>
-                                {allEmployees.map(emp => (
+                                {(allEmployees || []).map(emp => (
                                     <option key={emp.id} value={emp.id}>{emp.full_name} ({emp.employee_code})</option>
                                 ))}
                             </select>
@@ -288,7 +289,7 @@ const TimekeepingPage = () => {
                         {showAllTimesheets && (
                             <select value={filterCompany} onChange={e => setFilterCompany(e.target.value)}>
                                 <option value="">Tất cả đơn vị</option>
-                                {companies.map(comp => (
+                                {(companies || []).map(comp => (
                                     <option key={comp.id} value={comp.id}>{comp.company_name}</option>
                                 ))}
                             </select>
@@ -338,7 +339,7 @@ const TimekeepingPage = () => {
                                         <td>{moment(record.work_date).format('DD/MM/YYYY')}</td>
                                         <td>{record.check_in_time ? moment(record.check_in_time).format('HH:mm:ss') : '---'}</td>
                                         <td>{record.check_out_time ? moment(record.check_out_time).format('HH:mm:ss') : '---'}</td>
-                                        <td>{record.work_hours !== null && record.work_hours !== undefined ? record.work_hours : 'N/A'}</td>
+                                        <td>{((record?.work_hours ?? record?.working_hours) ?? 'N/A')}</td>
                                         <td>{record.status}</td>
                                         {showAllTimesheets && (
                                             <>

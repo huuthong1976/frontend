@@ -1,33 +1,41 @@
-// src/utils/api.js (bản cải tiến gợi ý)
-import axios from "axios";
-
-const API_ROOT = (process.env.REACT_APP_API_URL || "").replace(/\/+$/, "");
+// src/utils/api.js (ĐÃ SỬA)
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: API_ROOT,
-  timeout: 15000, // tuỳ chọn
+  baseURL: process.env.REACT_APP_API_BASE_URL,
+  withCredentials: true,
 });
 
-api.interceptors.request.use((cfg) => {
-  const u = cfg.url || "";
-  // chỉ prefix nếu là đường dẫn tương đối và chưa có /api/
-  if (typeof u === "string" && !/^https?:\/\//i.test(u) && !u.startsWith("/api/")) {
-    cfg.url = `/api${u.startsWith("/") ? "" : "/"}${u}`;
-  }
-  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-  if (token) cfg.headers.Authorization = `Bearer ${token}`;
-  return cfg;
-});
+function getToken() {
+  return (
+    localStorage.getItem('token') ||
+    sessionStorage.getItem('token')
+  );
+}
 
-api.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    if (err?.response?.status === 401) {
-      localStorage.removeItem("token");
-      sessionStorage.removeItem("token");
-      // window.location.href = "/login";
+// Request Interceptor: Tự động GỬI token đi
+api.interceptors.request.use(
+  (config) => {
+    // SỬA LẠI: Gọi hàm getToken() để lấy token từ cả hai nơi
+    const token = getToken(); 
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return Promise.reject(err);
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response Interceptor để xử lý lỗi 401 (ĐÃ RẤT TỐT)
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token'); // Nên xóa ở cả hai nơi
+      window.location.href = '/login'; 
+    }
+    return Promise.reject(error);
   }
 );
 

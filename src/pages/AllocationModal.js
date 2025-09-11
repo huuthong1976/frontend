@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Modal, InputNumber, Button, notification } from 'antd';
 // ❗ Dùng axios instance có interceptor gắn token
-import api from '../utils/api'; // giữ nguyên đường dẫn theo project của bạn
+import api from 'utils/api'; // giữ nguyên đường dẫn theo project của bạn
 
 const EPS = 0.005;
 

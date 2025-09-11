@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Typography, Select, Spin, Alert } from 'antd';
 import { useDashboardData } from '../hooks/useDashboardData';
+import { useAuth } from '../context/AuthContext'; // ✅ Import useAuth
 
 // Import các component con
 import MetricWidget from './MetricWidget';
@@ -11,9 +12,22 @@ const { Title } = Typography;
 const { Option } = Select;
 
 const DashboardPage = () => {
+    // ✅ BƯỚC 1: Lấy thông tin người dùng từ context
+    const { user } = useAuth();
+    
+    // ✅ BƯỚC 2: Định nghĩa các vai trò được phép
+    const allowedRoles = ['Admin', 'TongGiamDoc', 'TruongDonVi'];
+
     const [filters, setFilters] = useState({ companyId: 'all' }); // Bộ lọc mặc định
     const { summary, loading, error } = useDashboardData(filters);
 
+    // ✅ BƯỚC 3: Kiểm tra quyền truy cập
+    // Nếu người dùng không tồn tại hoặc vai trò không được phép, không hiển thị gì cả.
+    if (!user || !allowedRoles.includes(user.role)) {
+        return null;
+    }
+    
+    // Các phần còn lại của component chỉ render nếu người dùng có quyền
     if (loading) return <div style={{ textAlign: 'center', padding: '50px' }}><Spin size="large" /></div>;
     if (error) return <Alert message="Lỗi" description={error} type="error" showIcon />;
     if (!summary) return <div>Không có dữ liệu.</div>;
@@ -61,14 +75,5 @@ const DashboardPage = () => {
         </div>
     );
 };
-
-// Bạn sẽ cần tạo các component con như MetricWidget, KpiByDeptChart, PendingTasks.
-// Ví dụ file MetricWidget.js:
-// const MetricWidget = ({ title, value, isCurrency, iconType }) => (
-//     <Card>
-//         {/* Hiển thị icon, title và value ở đây */}
-//         <Statistic title={title} value={value} formatter={isCurrency ? (val) => `${(val/1000000).toFixed(1)} tr` : undefined} />
-//     </Card>
-// );
 
 export default DashboardPage;

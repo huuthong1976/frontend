@@ -7,7 +7,7 @@ import {
   Row, Col, Alert, Spin, Select, Empty
 } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import api from '../utils/api';
+import api from 'utils/api';
 import { useAuth } from '../context/AuthContext';
 
 const { Title, Text } = Typography;
@@ -84,7 +84,7 @@ export default function BscConfigPage() {
       const { data: aspects } = await api.get('/kpi-aspects');
       const aspectRows = Array.isArray(aspects) ? aspects : [];
 
-      // 2) Thử lấy tỷ trọng; nếu lỗi, không chặn UI
+      // 2) Thử lấy tỷ trọng; nếu lỗi, không chặn
       let weightRows = [];
       try {
         const { data } = await api.get('/kpi-aspects/weights', {
@@ -134,7 +134,7 @@ export default function BscConfigPage() {
         year: selectedYear,
         weights: perspectives.map(p => ({
           perspective_id: p.id,
-          weight_percentage: parseFloat(values[`weight_${p.id}`]),
+          weight_percentage: parseFloat(values[`weight_${p.id}`] || 0),
         })),
       };
       await api.post('/kpi-aspects/weights', payload);

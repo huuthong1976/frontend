@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { App as AntAppProvider } from 'antd'; 
 import 'antd/dist/reset.css';
 // --- Layouts ---
 import PrivateLayout from './components/layout/PrivateLayout'; // Giả sử bạn có layout này
@@ -46,7 +47,8 @@ import BiPage from './components/bi/BiPage';
 
 function App() {
   return (
-    <AuthProvider>
+    <AntAppProvider>
+       <AuthProvider> 
       <Router>
         <Routes>
           {/* === PUBLIC ROUTES === */}
@@ -99,7 +101,8 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </AntAppProvider>
   );
 }
 

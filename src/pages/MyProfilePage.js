@@ -10,9 +10,10 @@ import {
   Modal,
   message,
   Card,
+  Typography,
 } from 'antd';
 import dayjs from 'dayjs';
-import api from '../utils/api'; // Sử dụng file cấu hình axios chung
+import api from 'utils/api'; // Sử dụng file cấu hình axios chung
 
 const { Option } = Select;
 
@@ -26,20 +27,43 @@ const normalizeGender = (g) => {
 };
 
 /* ========== Modal Đổi mật khẩu ========== */
+/* ========== Modal Đổi mật khẩu (Đã điều chỉnh) ========== */
 const ChangePasswordModal = ({ open, onClose }) => {
   const [submitting, setSubmitting] = useState(false);
   const [form] = Form.useForm();
+  
+  // ✅ 1. Thêm state để lưu trữ độ mạnh mật khẩu
+  const [passwordStrength, setPasswordStrength] = useState({ level: 'none', text: '', color: '' });
+
+  // ✅ 2. Thêm hàm tiện ích để kiểm tra độ mạnh mật khẩu
+  const checkPasswordStrength = (password) => {
+    if (!password) return { level: 'none', text: '', color: '' };
+    let score = 0;
+    if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    if (score <= 2) return { level: 'weak', text: 'Yếu', color: 'red' };
+    if (score <= 4) return { level: 'medium', text: 'Trung bình', color: 'orange' };
+    return { level: 'strong', text: 'Mạnh', color: 'green' };
+  };
+  
+  const handleValuesChange = (changedValues, allValues) => {
+    // Cập nhật chỉ báo mỗi khi người dùng gõ vào ô mật khẩu mới
+    if (changedValues.new_password !== undefined) {
+      setPasswordStrength(checkPasswordStrength(changedValues.new_password));
+    }
+  };
 
   const onFinish = async (values) => {
     try {
       setSubmitting(true);
-      // Backend route user.routes.js không có endpoint đổi mật khẩu
-      // Endpoint này nằm trong users.js, nên ta gọi đúng vào nó
       await api.put('/users/me/password', {
         currentPassword: values.current_password,
         newPassword: values.new_password,
       });
-
       message.success('Đổi mật khẩu thành công!');
       form.resetFields();
       onClose?.();
@@ -62,8 +86,9 @@ const ChangePasswordModal = ({ open, onClose }) => {
       cancelText="Hủy"
       destroyOnClose
     >
-      <Form form={form} layout="vertical" onFinish={onFinish}>
-         <Form.Item
+      {/* ✅ 3. Thêm prop onValuesChange vào Form */}
+      <Form form={form} layout="vertical" onFinish={onFinish} onValuesChange={handleValuesChange}>
+        <Form.Item
           label="Mật khẩu hiện tại"
           name="current_password"
           rules={[{ required: true, message: 'Vui lòng nhập mật khẩu hiện tại' }]}
@@ -77,6 +102,12 @@ const ChangePasswordModal = ({ open, onClose }) => {
             { required: true, message: 'Vui lòng nhập mật khẩu mới' },
             { min: 6, message: 'Mật khẩu tối thiểu 6 ký tự' },
           ]}
+          // ✅ 4. Thêm phần hiển thị chỉ báo độ mạnh
+          help={passwordStrength.level !== 'none' && (
+            <Typography.Text style={{ color: passwordStrength.color }}>
+              Độ mạnh: {passwordStrength.text}
+            </Typography.Text>
+          )}
         >
           <Input.Password />
         </Form.Item>
@@ -103,7 +134,6 @@ const ChangePasswordModal = ({ open, onClose }) => {
   );
 };
 
-
 /* ========== Trang Hồ sơ ========== */
 const MyProfilePage = () => {
   const [form] = Form.useForm();
@@ -116,7 +146,7 @@ const MyProfilePage = () => {
     try {
       // Sửa lại để gọi đúng endpoint với tiền tố '/users'
       // Full path sẽ là: /api (từ baseURL) + /users (tiền tố) + /my-profile (route)
-      const res = await api.get('/users/my-profile');
+      const res = await api.get('/users/me');
       
       const profileData = res.data;
 

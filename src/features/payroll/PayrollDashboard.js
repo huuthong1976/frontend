@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState, useRef, useCallback } from 'react';
-import api from '../../utils/api';
+import api from 'utils/api';
 import PayslipModal from './PayslipModal';
 import './PayrollDashboard.css';
 import { Button } from 'antd';
 import { PrinterOutlined } from '@ant-design/icons';
-import { FaFileImport, FaFileExport, FaDownload, FaCalculator, FaSave, FaEye } from 'react-icons/fa';
+import {  FaCalculator, FaSave, FaEye } from 'react-icons/fa';
 import { handlePrintPayrollList } from './payrollPdfExporter';
 
 // Các hàm tiện ích
@@ -35,7 +35,7 @@ export default function PayrollDashboard() {
 
   const canOperate = useMemo(() => {
     const r = normalizeRole(me?.role || '');
-    const allowed = ['admin','tonggiamdoc','ketoan','nhansu','truongdonvi','truongphong'];
+    const allowed = ['Admin','TongGiamDoc','KeToan','Nhansu','TruongDonVi'];
     return allowed.includes(r);
   }, [me]);
 

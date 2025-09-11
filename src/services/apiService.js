@@ -2,19 +2,15 @@
 
 import axios from 'axios';
 
-// --- Cấu hình AXIOS INSTANCE ---
-// Tạo một "instance" của axios để dùng chung cho toàn bộ ứng dụng.
-// Điều này giúp bạn không phải lặp lại Base URL và có thể cấu hình header tập trung.
+
 const apiClient = axios.create({
-  baseURL: 'http://localhost:5000/api', // << THAY BẰNG ĐỊA CHỈ BACKEND CỦA BẠN
+  baseURL: 'http://localhost:5000/api', 
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// --- INTERCEPTOR để tự động thêm TOKEN vào mỗi request ---
-// Đây là một kỹ thuật nâng cao nhưng cực kỳ hữu ích.
-// Nó sẽ "chặn" mọi request trước khi gửi đi và gắn token vào header.
+
 apiClient.interceptors.request.use(
   (config) => {
     // Lấy token từ localStorage (hoặc nơi bạn lưu trữ sau khi đăng nhập)
@@ -30,9 +26,7 @@ apiClient.interceptors.request.use(
 );
 
 
-// --- CÁC HÀM GỌI API DANH MỤC ---
-// Mỗi hàm chịu trách nhiệm cho một loại danh mục.
-// Chúng xử lý lỗi và luôn trả về một mảng để giao diện không bị crash.
+
 
 /**
  * Lấy danh sách Công ty từ server
@@ -81,10 +75,9 @@ const getPositions = async () => {
  * @returns {Promise<object>}
  */
 const createUser = async (userData) => {
-    // api.post('/admin/create-user', formattedValues);
-    // URL đầy đủ sẽ là http://localhost:5000/admin/create-user
+   
     try {
-      const response = await apiClient.post('/admin/create-user', userData);
+      const response = await apiClient.post('/users', userData);
       return response.data;
     } catch (error) {
       // Ném lỗi ra ngoài để component có thể bắt và hiển thị thông báo

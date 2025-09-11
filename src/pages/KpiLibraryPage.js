@@ -28,7 +28,7 @@ import {
   getCompanies,
 } from '../services/api.service';
 import { useAuth } from '../context/AuthContext';
-import api from '../utils/api';
+import api from 'utils/api';
 
 const { Title } = Typography;
 const { Option } = Select;

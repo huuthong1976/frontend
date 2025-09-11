@@ -124,13 +124,15 @@ export const handlePrintPayrollList = async (employees, companyName, month, year
     doc.setFont('Roboto', 'normal');
     
     const signatureX1 = pageWidth * 0.15;
-    const signatureX2 = pageWidth * 0.5;
-    const signatureX3 = pageWidth * 0.75;
+    const signatureX2 = pageWidth * 0.35;
+    const signatureX3 = pageWidth * 0.55;
+    const signatureX4 = pageWidth * 0.75;
     const signatureY = finalY + 70;
 
     doc.text('Tổng Giám Đốc', signatureX1, signatureY, { align: 'center' });
-    doc.text('Kế Toán Trưởng', signatureX2, signatureY, { align: 'center' });
-    doc.text('Người Lập', signatureX3, signatureY, { align: 'center' });
+    doc.text('Kiểm soát', signatureX2, signatureY, { align: 'center' });
+    doc.text('Kế Toán Trưởng', signatureX3, signatureY, { align: 'center' });
+    doc.text('Người Lập', signatureX4, signatureY, { align: 'center' });
     
     // --- LƯU FILE ---
     const fileName = `Bang_Luong_${companyName.replace(/\s/g, '_')}_Thang_${month}-${year}.pdf`;
