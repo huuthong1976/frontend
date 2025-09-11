@@ -2,8 +2,8 @@ name: Deploy React (CRA) to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]     # Tự chạy khi push vào main
-  workflow_dispatch:          # Cho phép chạy thủ công
+    branches: [ "main" ]     
+  workflow_dispatch:          
 
 permissions:
   contents: read
