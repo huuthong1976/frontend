@@ -2,7 +2,7 @@
 // RightDrawer.js
 // -----------------------------------------------------------------------------
 import React from 'react';
-import api from '../utils/api';
+import api from '../../utils/api';
 
 export default function RightDrawer({ plan, onClose, onUpdated, onEdit, canEdit }) {
   if (!plan) return null;
