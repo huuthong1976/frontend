@@ -1,4 +1,4 @@
-import api from '../../utils/api';
+import api from 'utils/api';
 export const fetchPlans = (params) => api.get('/plans', { params });
 export const createPlan = (payload)  => api.post('/plans', payload);
 export const updatePlan = (id, payload) => api.put(`/plans/${id}`, payload);
