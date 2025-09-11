@@ -2,8 +2,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-  withCredentials: true,
+  baseURL: "https://backend-production-bc73.up.railway.app", 
+  withCredentials: true, // nếu cần cookie
 });
 
 function getToken() {
