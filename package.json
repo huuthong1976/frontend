@@ -49,6 +49,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+   
+  "homepage": "https://thoidaiso.info.vn"
   "eslintConfig": {
     "extends": [
       "react-app",
