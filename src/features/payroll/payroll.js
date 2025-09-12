@@ -1,7 +1,7 @@
 // API wrappers cho module Payroll 3P
 // Đồng bộ với các component: PayrollDashboard, PayslipModal
 
-import api from 'utils/api';
+import api from '../utils/api';
 
 /** Tạo query string an toàn */
 const qs = (obj = {}) =>
