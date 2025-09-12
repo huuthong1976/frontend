@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
 // Cấu hình interceptor để tự động đính kèm token vào mỗi request
 axiosInstance.interceptors.request.use(
   (config) => {
