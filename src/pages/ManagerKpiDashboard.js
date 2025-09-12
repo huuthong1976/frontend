@@ -3,7 +3,7 @@
 /* ========================================================= */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Select, Table, Spin, Alert, Typography, Button, Space, Tag, message } from 'antd';
+import { Card, Select, Table, Alert, Typography, Button, Space, Tag, message } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { useManagerDashboardData } from '../hooks/useManagerDashboardData';
 import { bulkApproveKpis } from '../services/api.service';

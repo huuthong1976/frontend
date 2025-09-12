@@ -2,7 +2,7 @@
 // PlanFormModal.js (clean no-unused-vars: removed employees state/call)
 // -----------------------------------------------------------------------------
 import React, { useEffect, useState } from 'react';
-import api from 'utils/api';
+import api from '../../utils/api';
 
 export default function PlanFormModal({ initial, planId, onClose, onSaved }) {
   // ===== Master data =====

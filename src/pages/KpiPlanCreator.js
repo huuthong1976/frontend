@@ -4,7 +4,7 @@ import { Card, Table, Button, Modal, Form, Input, InputNumber, Popconfirm, Space
 import { PlusOutlined, DeleteOutlined, SendOutlined, EditOutlined } from '@ant-design/icons';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api'; 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const KpiPlanCreator = ({ month, year, onCreationSuccess }) => {
     const { user } = useAuth();

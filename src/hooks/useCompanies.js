@@ -6,7 +6,7 @@ import { message } from 'antd';
 export const useCompanies = () => {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [setError] = useState(null);
 
   // Define fetchCompanies outside of useEffect
   const fetchCompanies = useCallback(async () => {

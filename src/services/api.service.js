@@ -1,25 +1,26 @@
 // src/services/api.service.js
+
+// Giữ 1 import axios duy nhất để dùng cho downloadFile và 1 số call đặc biệt
 import axios from 'axios';
-import apiClient from './apiClient';
-import axiosInstance from './axios.config';
-import api from '../utils/api';
-const API_BASE_URL = process.env.REACT_APP_API_URL;
-import axios from "axios";
-export const api = axios.create({
-  baseURL,
-  withCredentials: true, 
-});
+
+// Giữ nguyên các instance theo cấu trúc hiện có
+import apiClient from './apiClient';          // axios instance chính
+import axiosInstance from './axios.config';   // axios instance phụ (nếu có cấu hình riêng)
+import api from '../utils/api';            // instance chuẩn Vite đã chuẩn hoá
+
+// Lấy biến môi trường đúng chuẩn Vite
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+
 // ================== API chính ==================
+
+// Đăng ký KPI đơn vị (GET danh sách)
 export const getUnitKpiRegistrations = async (companyId, year) => {
-  // Gọi đến API GET /api/unit-kpi/registrations mà chúng ta đã tạo
-  const response = await apiClient.get('/api/company-kpi', { 
-      params: { 
-          company_id: companyId, 
-          year 
-      } 
+  const response = await apiClient.get('/api/company-kpi', {
+    params: { company_id: companyId, year }
   });
   return response.data;
 };
+
 // Công ty
 export const getCompanies = async () => {
   const response = await apiClient.get('/api/companies');
@@ -31,105 +32,68 @@ export const getDepartments = async (params) => {
   const response = await apiClient.get('/api/departments', { params });
   return response.data;
 };
-/**
- * Lấy danh sách KPI từ thư viện để điền vào dropdown
- * @param {object} params - Các tham số lọc (ví dụ: company_id)
- */
+
+// Thư viện KPI (dropdown/filter)
 export const getKpiLibrary = async (params) => {
-  // Giả sử API endpoint của bạn là /kpi-library
   const response = await apiClient.get('/api/company-kpi/library', { params });
   return response.data;
 };
 
-/**
- * Tạo một đăng ký KPI Đơn vị mới
- * @param {object} data - Dữ liệu của KPI cần tạo
- */
+// Tạo đăng ký KPI đơn vị
 export const createUnitKpiRegistration = async (payload) => {
-  try {
-      // ✅ Đảm bảo đường dẫn '/company-kpi-registrations' này khớp với route backend
-      const response = await apiClient.post('/api/company-kpi', payload);
-      return response.data;
-  } catch (error) {
-      throw error;
-  }
+  const response = await apiClient.post('/api/company-kpi', payload);
+  return response.data;
 };
-/**
- * Cập nhật một đăng ký KPI Đơn vị đã có
- * @param {number} id - ID của đăng ký KPI cần cập nhật
- * @param {object} data - Dữ liệu cần cập nhật
- */
+
+// Cập nhật đăng ký KPI đơn vị
 export const updateUnitKpiRegistration = async (id, payload) => {
-  try {
-      // Gọi đến endpoint PUT của backend
-      const response = await apiClient.put(`/api/company-kpi/${id}`, payload);
-      return response.data;
-  } catch (error) {
-      console.error('Lỗi khi cập nhật KPI:', error.response?.data || error.message);
-      throw error;
-  }
+  const response = await apiClient.put(`/api/company-kpi/${id}`, payload);
+  return response.data;
 };
-/**
- * Gửi dữ liệu phân bổ chỉ tiêu 12 tháng cho một KPI.
- * @param {number} registrationId - ID của KPI cha.
- * @param {object} allocationData - Dữ liệu chứa mảng 12 tháng.
- */
+
+// Phân bổ KPI theo tháng
 export const allocateKpiMonthlyTargets = async (registrationId, allocationData) => {
-  try {
-      const response = await apiClient.post(`/api/company-kpi/${registrationId}/allocate`, allocationData);
-      return response.data;
-  } catch (error) {
-      console.error('Lỗi khi phân bổ KPI tháng:', error.response?.data || error.message);
-      throw error;
-  }
+  const response = await apiClient.post(`/api/company-kpi/${registrationId}/allocate`, allocationData);
+  return response.data;
 };
-/**
- * Gửi yêu cầu đăng ký hàng loạt KPI
- * @param {Array<object>} kpiList - Danh sách các KPI cần tạo
- */
+
+// Tạo hàng loạt đăng ký KPI đơn vị
 export const bulkCreateUnitKpiRegistrations = async (kpiList) => {
   const payload = { kpis: kpiList };
   const response = await apiClient.post('/api/company-kpi/bulk-register', payload);
   return response.data;
 };
-/**
- * Xóa một đăng ký KPI Đơn vị
- * @param {number} id - ID của đăng ký KPI cần xóa
- */
+
+// Xoá đăng ký KPI đơn vị
 export const deleteUnitKpiRegistration = async (id) => {
-  return apiClient.delete(`/api/company-kpi/${id}`); 
-   
-};
-// Lấy kế hoạch KPI của người dùng theo tháng/năm
-export const getMyKpiPlan = async (month, year) => {
-  const response = await apiClient.get('/kpi/my-plan', { params: {month, year } });
-  return response.data; // apiClient đã xử lý lỗi chung, chúng ta chỉ cần trả về data
+  return apiClient.delete(`/api/company-kpi/${id}`);
 };
 
-// Tạo kế hoạch KPI mới
+// Lấy kế hoạch KPI của tôi
+export const getMyKpiPlan = async (month, year) => {
+  const response = await apiClient.get('/kpi/my-plan', { params: { month, year } });
+  return response.data;
+};
+
+// Tạo kế hoạch KPI của tôi
 export const createMyKpiPlan = async (planData) => {
-  // planData là object chứa { month, year, items }
   const response = await apiClient.post('/kpi/my-plan', planData);
   return response.data;
 };
+
 // ================== Các API khác ==================
 
-// Tải file (PDF, Excel, …)
+// Tải file (PDF/Excel/…)
 const downloadFile = async (url, filename) => {
-    try {
-      const response = await axios.get(url, { responseType: 'blob' });
-      const href = window.URL.createObjectURL(response.data);
-      const link = document.createElement('a');
-      link.href = href;
-      link.setAttribute('download', filename);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Lỗi tải file:", error);
-      alert("Không thể tải file. Vui lòng thử lại.");
-    }
-  };
+  const response = await axios.get(url, { responseType: 'blob' });
+  const href = window.URL.createObjectURL(response.data);
+  const link = document.createElement('a');
+  link.href = href;
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 // Xuất phiếu lương PDF
 export const exportPayslipPDF = (payslipId) => {
@@ -140,8 +104,8 @@ export const exportPayslipPDF = (payslipId) => {
 export const sendZaloNotificationAPI = (payslipId) => {
   return axios.post(`${API_BASE_URL}/notify/zalo/${payslipId}`);
 };
-// ✅ BỔ SUNG CÁC HÀM CRUD CHO THƯ VIỆN KPI
 
+// CRUD thư viện KPI
 export const createKpiInLibrary = async (kpiData) => {
   const response = await apiClient.post('/api/kpi-library', kpiData);
   return response.data;
@@ -156,87 +120,64 @@ export const deleteKpiInLibrary = async (id) => {
   const response = await apiClient.delete(`/api/kpi-library/${id}`);
   return response.data;
 };
+
+// Nộp tự đánh giá KPI
 export const submitMyKpiAssessment = async (assessmentData) => {
-  // Gọi đến API backend đã tạo ở bước trước
   const response = await apiClient.post('/kpi/my-plan/submit-assessment', assessmentData);
   return response.data;
 };
-// ✅ Lấy danh sách nhân viên cấp dưới để quản lý duyệt KPI
+
+// Danh sách cấp dưới để đánh giá
 export const getSubordinatesForManager = async (filters) => {
-  // filters là object chứa { company_id, month, year, status }
   const response = await apiClient.get('/kpi/subordinates-for-evaluation', { params: filters });
   return response.data;
 };
 
-// ✅ Gửi yêu cầu duyệt hàng loạt
+// Duyệt KPI hàng loạt
 export const bulkApproveKpis = async (planIds) => {
-  // planIds là một mảng các ID của kế hoạch (hoặc employee_id)
   const response = await apiClient.post('/api/kpi/bulk-approve', { planIds });
   return response.data;
 };
+
+// Khía cạnh KPI
 export const getKpiAspects = async () => {
-  try {
-      const response = await apiClient.get('/api/kpi-aspects'); // ✅ Đảm bảo endpoint này tồn tại ở backend
-      return response.data;
-  } catch (error) {
-      console.error('Lỗi khi lấy danh sách Khía cạnh:', error.response?.data || error.message);
-      throw error;
-  }
+  const response = await apiClient.get('/api/kpi-aspects');
+  return response.data;
 };
-/**
- * Lấy dữ liệu kết quả KPI hàng tháng của một đơn vị.
- * @param {object} filters - Chứa companyId, year, month.
- */
+
+// Kết quả KPI đơn vị theo tháng
 export const getUnitKpiResults = async (filters) => {
-  try {
-      const response = await apiClient.get('/api/company-kpi-results', { params: filters });
-      return response.data;
-  } catch (error) {
-      console.error('Lỗi khi lấy dữ liệu kết quả KPI đơn vị:', error.response?.data || error.message);
-      throw error;
-  }
+  const response = await apiClient.get('/api/company-kpi-results', { params: filters });
+  return response.data;
 };
-/**
- * Lưu (cập nhật) kết quả KPI hàng tháng của đơn vị.
- * @param {object} payload - Chứa filters (companyId, year, month) và mảng results.
- */
+
+// Lưu kết quả KPI đơn vị theo tháng
 export const saveUnitKpiResults = async (payload) => {
-  try {
-      const response = await apiClient.post('/api/company-kpi-results', payload);
-      return response.data;
-  } catch (error) {
-      console.error('Lỗi khi lưu kết quả KPI đơn vị:', error.response?.data || error.message);
-      throw error;
-  }
+  const response = await apiClient.post('/api/company-kpi-results', payload);
+  return response.data;
 };
+
+// Tổng hợp theo tháng (dùng axiosInstance phụ)
 export const getMonthlySummary = async (companyId, year, month) => {
-  try {
-    // Bây giờ axiosInstance đã là instance được cấu hình đúng
-    const response = await axiosInstance.get('/api/company-kpi-summary', {
-      params: { companyId, year, month }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('API Error getMonthlySummary:', error.response?.data || error.message);
-    throw error.response?.data || new Error('Lỗi không xác định');
-  }
-};
-// Hàm gọi API để xuất file Excel thư viện KPI
-export const exportKpiLibrary = async (companyId) => {
-  const response = await api.get(`/api/kpi-library/export`, {
-      params: { companyId },
-      responseType: 'blob', // Yêu cầu server trả về file
+  const response = await axiosInstance.get('/api/company-kpi-summary', {
+    params: { companyId, year, month }
   });
   return response.data;
 };
 
-// Hàm gọi API để nhập file Excel thư viện KPI
+// Xuất / Nhập Excel thư viện KPI (dùng instance chuẩn utils/api)
+export const exportKpiLibrary = async (companyId) => {
+  const response = await api.get(`/api/kpi-library/export`, {
+    params: { companyId },
+    responseType: 'blob',
+  });
+  return response.data;
+};
+
 export const importKpiLibrary = async (companyId, formData) => {
   const response = await api.post(`/api/kpi-library/import`, formData, {
-      params: { companyId },
-      headers: {
-          'Content-Type': 'multipart/form-data',
-      },
+    params: { companyId },
+    headers: { 'Content-Type': 'multipart/form-data' },
   });
   return response.data;
 };
