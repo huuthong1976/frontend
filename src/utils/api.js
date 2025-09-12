@@ -1,41 +1,37 @@
-// src/utils/api.js (ĐÃ SỬA)
+// src/utils/api.js
 import axios from 'axios';
 
+const API_BASE =
+  process.env.REACT_APP_API_BASE_URL ||
+  'https://backend-production-bc73.up.railway.app';
+
 const api = axios.create({
-  baseURL: "https://backend-production-bc73.up.railway.app", 
-  withCredentials: true, // nếu cần cookie
+  baseURL: API_BASE,
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: false,
 });
 
 function getToken() {
-  return (
-    localStorage.getItem('token') ||
-    sessionStorage.getItem('token')
-  );
+  return localStorage.getItem('token') || sessionStorage.getItem('token');
 }
 
-// Request Interceptor: Tự động GỬI token đi
-api.interceptors.request.use(
-  (config) => {
-    // SỬA LẠI: Gọi hàm getToken() để lấy token từ cả hai nơi
-    const token = getToken(); 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+api.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  // tránh cache trên GitHub Pages
+  config.headers['Cache-Control'] = 'no-store';
+  return config;
+});
 
-// Response Interceptor để xử lý lỗi 401 (ĐÃ RẤT TỐT)
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
+  (res) => res,
+  (err) => {
+    if (err.response?.status === 401) {
       localStorage.removeItem('token');
-      sessionStorage.removeItem('token'); // Nên xóa ở cả hai nơi
-      window.location.href = '/login'; 
+      sessionStorage.removeItem('token');
+      window.location.href = '/login';
     }
-    return Promise.reject(error);
+    return Promise.reject(err);
   }
 );
 
