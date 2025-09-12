@@ -2,7 +2,7 @@
 import axios from 'axios';
 import apiClient from './apiClient';
 import axiosInstance from './axios.config';
-import api from 'utils/api';
+import api from '../utils/api';
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 import axios from "axios";
 export const api = axios.create({
