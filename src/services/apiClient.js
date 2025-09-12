@@ -19,7 +19,6 @@ apiClient.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
 // Response interceptor -> xử lý lỗi chung
 apiClient.interceptors.response.use(
     (response) => response,
