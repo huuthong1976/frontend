@@ -8,7 +8,7 @@ import apiClient from './apiClient'; // Import axios instance đã được cấ
  */
 export const getDashboardSummary = async (filters) => {
     try {
-        const response = await apiClient.get('/dashboard/summary', { params: filters });
+        const response = await apiClient.get('/api/dashboard/summary', { params: filters });
         return response.data; // Trả về trực tiếp phần data của response
     } catch (error) {
         // Ghi lại lỗi và throw lại để hook có thể bắt được
