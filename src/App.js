@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { App as AntAppProvider } from 'antd'; 
 import 'antd/dist/reset.css';
@@ -49,7 +49,7 @@ function App() {
   return (
     <AntAppProvider>
        <AuthProvider> 
-      <Router>
+    
         <Routes>
           {/* === PUBLIC ROUTES === */}
           <Route element={<PublicLayout />}>
@@ -101,7 +101,7 @@ function App() {
             <Route path="*" element={<div>404 Not Found</div>} /> 
           </Route>
         </Routes>
-      </Router>
+    
       </AuthProvider>
     </AntAppProvider>
   );
