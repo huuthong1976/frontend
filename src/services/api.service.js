@@ -12,7 +12,7 @@ export const api = axios.create({
 // ================== API chính ==================
 export const getUnitKpiRegistrations = async (companyId, year) => {
   // Gọi đến API GET /api/unit-kpi/registrations mà chúng ta đã tạo
-  const response = await apiClient.get('/company-kpi', { 
+  const response = await apiClient.get('/api/company-kpi', { 
       params: { 
           company_id: companyId, 
           year 
@@ -22,13 +22,13 @@ export const getUnitKpiRegistrations = async (companyId, year) => {
 };
 // Công ty
 export const getCompanies = async () => {
-  const response = await apiClient.get('/companies');
+  const response = await apiClient.get('/api/companies');
   return response.data;
 };
 
 // Phòng ban
 export const getDepartments = async (params) => {
-  const response = await apiClient.get('/departments', { params });
+  const response = await apiClient.get('/api/departments', { params });
   return response.data;
 };
 /**
@@ -37,7 +37,7 @@ export const getDepartments = async (params) => {
  */
 export const getKpiLibrary = async (params) => {
   // Giả sử API endpoint của bạn là /kpi-library
-  const response = await apiClient.get('/company-kpi/library', { params });
+  const response = await apiClient.get('/api/company-kpi/library', { params });
   return response.data;
 };
 
@@ -48,7 +48,7 @@ export const getKpiLibrary = async (params) => {
 export const createUnitKpiRegistration = async (payload) => {
   try {
       // ✅ Đảm bảo đường dẫn '/company-kpi-registrations' này khớp với route backend
-      const response = await apiClient.post('/company-kpi', payload);
+      const response = await apiClient.post('/api/company-kpi', payload);
       return response.data;
   } catch (error) {
       throw error;
@@ -63,7 +63,7 @@ export const createUnitKpiRegistration = async (payload) => {
 export const updateUnitKpiRegistration = async (id, payload) => {
   try {
       // Gọi đến endpoint PUT của backend
-      const response = await apiClient.put(`/company-kpi/${id}`, payload);
+      const response = await apiClient.put(`/api/company-kpi/${id}`, payload);
       return response.data;
   } catch (error) {
       console.error('Lỗi khi cập nhật KPI:', error.response?.data || error.message);
@@ -77,7 +77,7 @@ export const updateUnitKpiRegistration = async (id, payload) => {
  */
 export const allocateKpiMonthlyTargets = async (registrationId, allocationData) => {
   try {
-      const response = await apiClient.post(`/company-kpi/${registrationId}/allocate`, allocationData);
+      const response = await apiClient.post(`/api/company-kpi/${registrationId}/allocate`, allocationData);
       return response.data;
   } catch (error) {
       console.error('Lỗi khi phân bổ KPI tháng:', error.response?.data || error.message);
@@ -90,7 +90,7 @@ export const allocateKpiMonthlyTargets = async (registrationId, allocationData) 
  */
 export const bulkCreateUnitKpiRegistrations = async (kpiList) => {
   const payload = { kpis: kpiList };
-  const response = await apiClient.post('/company-kpi/bulk-register', payload);
+  const response = await apiClient.post('/api/company-kpi/bulk-register', payload);
   return response.data;
 };
 /**
@@ -98,7 +98,7 @@ export const bulkCreateUnitKpiRegistrations = async (kpiList) => {
  * @param {number} id - ID của đăng ký KPI cần xóa
  */
 export const deleteUnitKpiRegistration = async (id) => {
-  return apiClient.delete(`/company-kpi/${id}`); 
+  return apiClient.delete(`/api/company-kpi/${id}`); 
    
 };
 // Lấy kế hoạch KPI của người dùng theo tháng/năm
@@ -144,17 +144,17 @@ export const sendZaloNotificationAPI = (payslipId) => {
 // ✅ BỔ SUNG CÁC HÀM CRUD CHO THƯ VIỆN KPI
 
 export const createKpiInLibrary = async (kpiData) => {
-  const response = await apiClient.post('/kpi-library', kpiData);
+  const response = await apiClient.post('/api/kpi-library', kpiData);
   return response.data;
 };
 
 export const updateKpiInLibrary = async (id, kpiData) => {
-  const response = await apiClient.put(`/kpi-library/${id}`, kpiData);
+  const response = await apiClient.put(`/api/kpi-library/${id}`, kpiData);
   return response.data;
 };
 
 export const deleteKpiInLibrary = async (id) => {
-  const response = await apiClient.delete(`/kpi-library/${id}`);
+  const response = await apiClient.delete(`/api/kpi-library/${id}`);
   return response.data;
 };
 export const submitMyKpiAssessment = async (assessmentData) => {
@@ -172,12 +172,12 @@ export const getSubordinatesForManager = async (filters) => {
 // ✅ Gửi yêu cầu duyệt hàng loạt
 export const bulkApproveKpis = async (planIds) => {
   // planIds là một mảng các ID của kế hoạch (hoặc employee_id)
-  const response = await apiClient.post('/kpi/bulk-approve', { planIds });
+  const response = await apiClient.post('/api/kpi/bulk-approve', { planIds });
   return response.data;
 };
 export const getKpiAspects = async () => {
   try {
-      const response = await apiClient.get('/kpi-aspects'); // ✅ Đảm bảo endpoint này tồn tại ở backend
+      const response = await apiClient.get('/api/kpi-aspects'); // ✅ Đảm bảo endpoint này tồn tại ở backend
       return response.data;
   } catch (error) {
       console.error('Lỗi khi lấy danh sách Khía cạnh:', error.response?.data || error.message);
@@ -190,7 +190,7 @@ export const getKpiAspects = async () => {
  */
 export const getUnitKpiResults = async (filters) => {
   try {
-      const response = await apiClient.get('/company-kpi-results', { params: filters });
+      const response = await apiClient.get('/api/company-kpi-results', { params: filters });
       return response.data;
   } catch (error) {
       console.error('Lỗi khi lấy dữ liệu kết quả KPI đơn vị:', error.response?.data || error.message);
@@ -203,7 +203,7 @@ export const getUnitKpiResults = async (filters) => {
  */
 export const saveUnitKpiResults = async (payload) => {
   try {
-      const response = await apiClient.post('/company-kpi-results', payload);
+      const response = await apiClient.post('/api/company-kpi-results', payload);
       return response.data;
   } catch (error) {
       console.error('Lỗi khi lưu kết quả KPI đơn vị:', error.response?.data || error.message);
@@ -213,7 +213,7 @@ export const saveUnitKpiResults = async (payload) => {
 export const getMonthlySummary = async (companyId, year, month) => {
   try {
     // Bây giờ axiosInstance đã là instance được cấu hình đúng
-    const response = await axiosInstance.get('/company-kpi-summary', {
+    const response = await axiosInstance.get('/api/company-kpi-summary', {
       params: { companyId, year, month }
     });
     return response.data;
@@ -224,7 +224,7 @@ export const getMonthlySummary = async (companyId, year, month) => {
 };
 // Hàm gọi API để xuất file Excel thư viện KPI
 export const exportKpiLibrary = async (companyId) => {
-  const response = await api.get(`/kpi-library/export`, {
+  const response = await api.get(`/api/kpi-library/export`, {
       params: { companyId },
       responseType: 'blob', // Yêu cầu server trả về file
   });
@@ -233,7 +233,7 @@ export const exportKpiLibrary = async (companyId) => {
 
 // Hàm gọi API để nhập file Excel thư viện KPI
 export const importKpiLibrary = async (companyId, formData) => {
-  const response = await api.post(`/kpi-library/import`, formData, {
+  const response = await api.post(`/api/kpi-library/import`, formData, {
       params: { companyId },
       headers: {
           'Content-Type': 'multipart/form-data',
