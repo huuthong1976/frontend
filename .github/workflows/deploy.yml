@@ -3,12 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-    paths:
-      - "src/**"
-      - "public/**"
-      - "package.json"
-      - "package-lock.json"
-      - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
 permissions:
@@ -19,6 +13,11 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: true
+
+# Nếu project KHÔNG ở root, set working-directory tại đây
+# defaults:
+#   run:
+#     working-directory: ./frontend   # ← sửa nếu dự án nằm trong thư mục con
 
 jobs:
   build:
@@ -34,11 +33,8 @@ jobs:
 
       - name: Install deps
         run: |
-          if [ -f package-lock.json ]; then
-            npm ci --no-audit --no-fund
-          else
-            npm install --no-audit --no-fund
-          fi
+          npm ci --no-audit --no-fund || \
+          (rm -f package-lock.json && npm install --no-audit --no-fund --legacy-peer-deps)
 
       - name: Build
         run: CI=false npm run build
@@ -58,7 +54,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
-
