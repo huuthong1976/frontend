@@ -8,7 +8,6 @@ export const getEmployees = (params) => {
     }
     return apiClient.get('/api/employees', { params });
   };
-
 // Lấy danh sách rút gọn cho dropdown
 export const getEmployeeSelectList = (params) => {
     return apiClient.get('/api/employees/select-list', { params });
