@@ -20,7 +20,6 @@ export const getDepartments = async (params) => {
     return response.data; // Trả về trực tiếp phần dữ liệu
 };
 
-
 export const createCompany = (companyData) => {
     return apiClient.post('/api/companies', companyData);
 };
