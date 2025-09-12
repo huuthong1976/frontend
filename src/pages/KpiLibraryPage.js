@@ -32,7 +32,6 @@ import api from 'utils/api';
 
 const { Title } = Typography;
 const { Option } = Select;
-
 // Build tree from flat list
 const buildTree = (items, parentId = null) =>
   (items || [])
