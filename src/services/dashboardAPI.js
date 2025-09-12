@@ -1,6 +1,5 @@
 // src/services/dashboardAPI.js
 import apiClient from './apiClient'; // Import axios instance đã được cấu hình
-
 /**
  * Lấy dữ liệu tổng hợp cho trang Dashboard từ server.
  * @param {object} filters - Đối tượng chứa các bộ lọc (ví dụ: { companyId: 1 }).
