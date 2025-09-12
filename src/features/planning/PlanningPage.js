@@ -4,7 +4,7 @@
 // -----------------------------------------------------------------------------
 
 import React, { useEffect, useState } from 'react';
-import api from 'utils/api';
+import api from '../utils/api';
 import PlanningToolbar from './PlanningToolbar';
 import PlanningCalendar from './PlanningCalendar';
 import PlanFormModal from './PlanFormModal';
