@@ -1,7 +1,6 @@
 // src/services/departmentAPI.js
 import apiClient from './apiClient'; // Import axios instance đã cấu hình
 
-
 export const getDepartments = (params) => {
     return apiClient.get('/api/departments', { params });
 };
