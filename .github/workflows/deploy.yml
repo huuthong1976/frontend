@@ -1,58 +1,25 @@
 name: Deploy to GitHub Pages
-
 on:
-  push:
-    branches: [ main ]
+  push: { branches: [ main ] }
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
-# Nếu project KHÔNG ở root, set working-directory tại đây
-# defaults:
-#   run:
-#     working-directory: ./frontend   # ← sửa nếu dự án nằm trong thư mục con
+permissions: { contents: read, pages: write, id-token: write }
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: npm
-          cache-dependency-path: package-lock.json
-
-      - name: Install deps
-        run: |
-          npm ci --no-audit --no-fund || \
-          (rm -f package-lock.json && npm install --no-audit --no-fund --legacy-peer-deps)
-
-      - name: Build
-        run: CI=false npm run build
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./build
-
+        with: { node-version: 18, cache: npm }
+      - run: npm ci --no-audit --no-fund || (rm -f package-lock.json && npm i --no-audit --no-fund)
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: ./dist }
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    environment: { name: github-pages, url: ${{ steps.deployment.outputs.page_url }} }
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
