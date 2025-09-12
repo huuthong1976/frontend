@@ -2,5 +2,5 @@
 import apiClient from './apiClient';
 
 export const getKpiAspects = () => {
-    return apiClient.get('/kpi-aspects');
+    return apiClient.get('/api/kpi-aspects');
 };
