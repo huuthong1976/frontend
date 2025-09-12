@@ -92,27 +92,20 @@ const KpiLibraryPage = () => {
 
   // --- Tải danh sách đơn vị & đặt selectedCompany mặc định
   useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        const companyData = await getCompanies();
-        const normalized = normalizeCompanies(companyData || []);
-        if (!mounted) return;
+  (async () => {
+    try {
+      const { data } = await api.get('/companies');
+      const rows = Array.isArray(data) ? data : (data?.rows || []);
+      const list = normalizeCompanies(rows);
+      setCompanies(list);
 
-        setCompanies(normalized);
-
-        const isAdmin = (user?.role || '').toLowerCase() === 'admin';
-        const defaultId = !isAdmin && user?.company_id
-          ? String(user.company_id)
-          : normalized[0]?.id || null;
-
-        setSelectedCompany(defaultId);
-      } catch (e) {
-        message.error('Không thể tải danh sách đơn vị.');
-      }
-    })();
-    return () => { mounted = false; };
-  }, [user?.role, user?.company_id]);
+      // đặt mặc định: ưu tiên user.company_id, nếu không có thì lấy id đầu tiên
+      setSelectedCompany(prev => prev || user?.company_id || list[0]?.id || null);
+    } catch (e) {
+      message.error('Không thể tải danh sách đơn vị.');
+    }
+  })();
+}, [user]);
 
   useEffect(() => {
     fetchData();
