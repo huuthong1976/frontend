@@ -54,7 +54,6 @@ export const createUnitKpiRegistration = async (payload) => {
       throw error;
   }
 };
-
 /**
  * Cập nhật một đăng ký KPI Đơn vị đã có
  * @param {number} id - ID của đăng ký KPI cần cập nhật
