@@ -3,7 +3,11 @@
 /* ========================================================= */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import api from 'utils/api';
+=======
+import api from '../utils/api';
+>>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
 import AuthContext from '../../context/AuthContext';
 import EmployeeForm from './EmployeeForm';
 import { Card, Descriptions, Tabs, Spin, Alert, Typography, Button, Space, Avatar, Tag } from 'antd';

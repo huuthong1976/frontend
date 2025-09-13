@@ -32,7 +32,6 @@ import api from 'utils/api';
 
 const { Title } = Typography;
 const { Option } = Select;
-
 // Build tree from flat list
 const buildTree = (items, parentId = null) =>
   (items || [])
@@ -68,7 +67,7 @@ const KpiLibraryPage = () => {
     if (!selectedCompany) return;
     setLoading(true);
     try {
-      const { data } = await api.get(`/kpi-library/tree`, { params: { company_id: selectedCompany }});
+      const { data } = await api.get(`/api/kpi-library/tree`, { params: { company_id: selectedCompany }});
       const aspectsData = await getKpiAspects();
       setKpiList(data || []);
       setAspects(aspectsData || []);
@@ -92,27 +91,20 @@ const KpiLibraryPage = () => {
 
   // --- Tải danh sách đơn vị & đặt selectedCompany mặc định
   useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        const companyData = await getCompanies();
-        const normalized = normalizeCompanies(companyData || []);
-        if (!mounted) return;
+  (async () => {
+    try {
+      const { data } = await api.get('/api/companies');
+      const rows = Array.isArray(data) ? data : (data?.rows || []);
+      const list = normalizeCompanies(rows);
+      setCompanies(list);
 
-        setCompanies(normalized);
-
-        const isAdmin = (user?.role || '').toLowerCase() === 'admin';
-        const defaultId = !isAdmin && user?.company_id
-          ? String(user.company_id)
-          : normalized[0]?.id || null;
-
-        setSelectedCompany(defaultId);
-      } catch (e) {
-        message.error('Không thể tải danh sách đơn vị.');
-      }
-    })();
-    return () => { mounted = false; };
-  }, [user?.role, user?.company_id]);
+      // đặt mặc định: ưu tiên user.company_id, nếu không có thì lấy id đầu tiên
+      setSelectedCompany(prev => prev || user?.company_id || list[0]?.id || null);
+    } catch (e) {
+      message.error('Không thể tải danh sách đơn vị.');
+    }
+  })();
+}, [user]);
 
   useEffect(() => {
     fetchData();
@@ -240,7 +232,7 @@ const KpiLibraryPage = () => {
 
   const handleExport = async () => {
     try {
-      const response = await api.get('/kpi-library/export', { responseType: 'blob' });
+      const response = await api.get('/api/kpi-library/export', { responseType: 'blob' });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
@@ -269,7 +261,7 @@ const KpiLibraryPage = () => {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      await api.post('/kpi-library/import', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+      await api.post('/api/kpi-library/import', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
       notification.success({ message: 'Nhập file thành công!' });
       fetchData();
     } catch (error) {
