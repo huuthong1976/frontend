@@ -27,7 +27,8 @@ jobs:
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: build
+          # Sửa lại đường dẫn thư mục build cho đúng với Vite
+          path: 'dist'
 
   deploy:
     needs: build
