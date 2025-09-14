@@ -5,10 +5,10 @@ import apiClient from './apiClient'; // Import axios instance đã cấu hình
  * Lấy danh sách tất cả các công ty.
  */
 export const getCompanyById = (id) => {
-    return apiClient.get(`/api/companies/${id}`);
+    return apiClient.get(`/companies/${id}`);
   };
 export const getCompanies = async () => {
-    const response = await apiClient.get('/api/companies');
+    const response = await apiClient.get('/companies');
     return response.data; // Trả về trực tiếp phần dữ liệu
 };
 
@@ -16,18 +16,19 @@ export const getCompanies = async () => {
  * Lấy danh sách phòng ban, có hỗ trợ bộ lọc.
  */
 export const getDepartments = async (params) => {
-    const response = await apiClient.get('/api/departments', { params });
+    const response = await apiClient.get('/departments', { params });
     return response.data; // Trả về trực tiếp phần dữ liệu
 };
 
+
 export const createCompany = (companyData) => {
-    return apiClient.post('/api/companies', companyData);
+    return apiClient.post('/companies', companyData);
 };
 
 export const updateCompany = (id, companyData) => {
-    return apiClient.put(`/api/companies/${id}`, companyData);
+    return apiClient.put(`/companies/${id}`, companyData);
 };
 
 export const deleteCompany = (id) => {
-    return apiClient.delete(`/api/companies/${id}`);
+    return apiClient.delete(`/companies/${id}`);
 };

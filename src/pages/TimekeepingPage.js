@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import './Timekeeping.css';
 import moment from 'moment';
-<<<<<<< HEAD
 import api from 'utils/api'
-=======
-import api from '../../utils/api'
->>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
 
-const API_URL = 'http://localhost:5000/api/timekeeping';
+const API_URL = '/timekeeping';
 // Giả định API này tồn tại và trả về danh sách nhân viên và công ty
 
 
@@ -66,8 +62,8 @@ const TimekeepingPage = () => {
 
     // --- Logic phân quyền hiển thị thông tin nâng cao và bộ lọc ---
     const canViewAdvancedInfo = user && (user.role === 'Admin' || user.role === 'TongGiamDoc' || user.role === 'TruongDonVi');
-    const canAccessAllTimesheetsFeature = user && (user.role === 'Admin' || user.role === 'TongGiamDoc');
-
+    const canAccessAllTimesheetsFeature = user && (user.role === 'Admin' || user.role === 'TongGiamDoc' || user.role === 'TruongDonVi');
+    const isUnitHead = user && user.role === 'TruongDonVi';
     const getDeviceType = () => {
         const ua = navigator.userAgent;
         if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return "Tablet";
@@ -77,21 +73,30 @@ const TimekeepingPage = () => {
 
     // Hàm fetch dữ liệu cho các dropdown bộ lọc (nhân viên, công ty)
     const fetchFilterDropdowns = useCallback(async () => {
-        if (canAccessAllTimesheetsFeature) {
-            try {
-                // Giả định API trả về mảng các đối tượng {id, full_name, employee_code, ...}
-                const employeesRes = await api.get('/employees'); 
-                console.log('API response for employees:', employeesRes.data); 
-                (() => { const _d = employeesRes?.data; const _arr = Array.isArray(_d?.results) ? _d.results : Array.isArray(_d) ? _d : []; setAllEmployees(_arr); })();
-
-                // Giả định API trả về mảng các đối tượng {id, company_name, ...}
-                const companiesRes = await api.get('/companies'); 
-                (() => { const _d = companiesRes?.data; const _arr = Array.isArray(_d?.results) ? _d.results : Array.isArray(_d) ? _d : []; setCompanies(_arr); })();
-            } catch (error) {
-                console.error("Lỗi tải dữ liệu dropdown lọc:", error);
-            }
+        if (!canAccessAllTimesheetsFeature) return;
+        try {
+          // Lấy danh sách nhân viên & công ty đồng thời
+          const [employeesRes, companiesRes] = await Promise.all([
+            api.get('/employees'),
+            api.get('/companies'),
+          ]);
+      
+          const employeesData = employeesRes?.data;
+          const companiesData = companiesRes?.data;
+      
+          const employees = Array.isArray(employeesData?.results)
+            ? employeesData.results
+            : (Array.isArray(employeesData) ? employeesData : []);
+          const companiesList = Array.isArray(companiesData?.results)
+            ? companiesData.results
+            : (Array.isArray(companiesData) ? companiesData : []);
+      
+          setAllEmployees(employees);
+          setCompanies(companiesList);
+        } catch (error) {
+          console.error('Lỗi tải dữ liệu dropdown lọc:', error);
         }
-    }, [canAccessAllTimesheetsFeature]);
+      }, [canAccessAllTimesheetsFeature]);
 
     // Hàm fetch lịch sử chấm công
     const fetchTimesheetHistory = useCallback(async () => {
@@ -99,16 +104,16 @@ const TimekeepingPage = () => {
         try {
             let res;
             if (showAllTimesheets && canAccessAllTimesheetsFeature) {
-                // Gọi API lấy tất cả chấm công với bộ lọc
-                res = await api.get(`${API_URL}/all-timesheets`, {
-                    params: {
-                        year: filterYear,
-                        month: filterMonth,
-                        employeeId: filterEmployee,
-                        companyId: filterCompany,
-                    }
-                });
-                setTodayRecord(null); // Không hiển thị widget chấm công cá nhân khi xem toàn bộ
+                   const path = isUnitHead ? '/unit-timesheets' : '/all-timesheets';
+                   const params = {
+                     year: filterYear,
+                     month: filterMonth,
+                     employeeId: filterEmployee || undefined,
+                     // Chỉ Admin/TGĐ mới đổi companyId; Trưởng đơn vị sẽ bị server ép bằng token
+                     ...(isUnitHead ? {} : { companyId: filterCompany || undefined }),
+                   };
+                   res = await api.get(`${API_URL}${path}`, { params });
+                    setTodayRecord(null);
             } else { 
                 // Gọi API lấy chấm công của bản thân
                 res = await api.get(`${API_URL}/my-timesheet`, {
@@ -133,6 +138,9 @@ const TimekeepingPage = () => {
     // Fetch data cho dropdown lọc và lịch sử chấm công khi component mount hoặc bộ lọc thay đổi
     useEffect(() => {
         fetchFilterDropdowns();
+        if (isUnitHead && user?.company_id) {
+            setFilterCompany(user.company_id);
+        }
     }, [fetchFilterDropdowns]);
 
     // Gọi fetchTimesheetHistory mỗi khi các bộ lọc hoặc chế độ xem thay đổi
@@ -282,10 +290,11 @@ const TimekeepingPage = () => {
                     <div className="history-filters">
                         {/* Dropdown lọc Nhân viên (chỉ hiển thị khi xem toàn tập đoàn) */}
                         {showAllTimesheets && (
-                            <select value={filterEmployee} onChange={e => setFilterEmployee(e.target.value)}>
-                                <option value="">Tất cả nhân viên</option>
-                                {(allEmployees || []).map(emp => (
-                                    <option key={emp.id} value={emp.id}>{emp.full_name} ({emp.employee_code})</option>
+                            <select value={filterCompany} onChange={e => setFilterCompany(e.target.value)}>
+                                disabled={isUnitHead}
+                                <option value="">Tất cả đơn vị</option>
+                                {(companies || []).map(comp => (
+                                    <option key={comp.id} value={comp.id}>{comp.company_name}</option>
                                 ))}
                             </select>
                         )}
@@ -300,11 +309,15 @@ const TimekeepingPage = () => {
                         )}
                         {/* Dropdown lọc Tháng */}
                         <select value={filterMonth} onChange={e => setFilterMonth(Number(e.target.value))}>
-                            {[...Array(12).keys()].map(i => <option key={i + 1} value={i + 1}>Tháng {i + 1}</option>)}
+                            {[...Array(12).keys()].map(i => (
+                            <option key={i + 1} value={i + 1}>Tháng {i + 1}</option>))}
                         </select>
                         {/* Dropdown lọc Năm */}
                         <select value={filterYear} onChange={e => setFilterYear(Number(e.target.value))}>
-                            {[...Array(5).keys()].map(i => <option key={moment().year() - 2 + i} value={moment().year() - 2 + i}>{moment().year() - 2 + i}</option>)}
+                            {[...Array(5).keys()].map(i => {
+                           const y = moment().year() - 2 + i; // 2 năm trước → 2 năm sau
+                           return <option key={y} value={y}>{y}</option>;
+                         })}
                         </select>
                     </div>
                 </div>

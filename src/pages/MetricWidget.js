@@ -1,4 +1,4 @@
-// src/components/dashboard/MetricWidget.js
+
 import React from 'react';
 import { Card, Statistic, Typography } from 'antd';
 import { UserOutlined, RiseOutlined, DollarCircleOutlined, SolutionOutlined } from '@ant-design/icons';
