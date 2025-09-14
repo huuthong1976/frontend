@@ -16,17 +16,17 @@ export const getTree = (filters = {}) => {
     const queryString = params.toString();
 
     // Nối query string vào URL, thêm dấu '?' nếu cần
-    return apiClient.get(`/api/kpi-library${queryString ? `?${queryString}` : ''}`);
+    return apiClient.get(`/kpi-library${queryString ? `?${queryString}` : ''}`);
 };
 
 export const createKpi = (kpiData) => {
-    return apiClient.post('/api/kpi-library', kpiData);
+    return apiClient.post('/kpi-library', kpiData);
 };
 
 export const updateKpi = (id, kpiData) => {
-    return apiClient.put(`/api/kpi-library/${id}`, kpiData);
+    return apiClient.put(`/kpi-library/${id}`, kpiData);
 };
 
 export const deleteKpi = (id) => {
-    return apiClient.delete(`/api/kpi-library/${id}`);
+    return apiClient.delete(`/kpi-library/${id}`);
 };

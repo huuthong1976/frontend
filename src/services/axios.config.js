@@ -4,11 +4,12 @@ import axios from 'axios';
 // Tạo một instance của axios
 const axiosInstance = axios.create({
   // Đặt URL cơ sở cho tất cả các request API
-  baseURL: process.env.VITE_API_BASE_URL || 'http://localhost:5000/api',
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
 // Cấu hình interceptor để tự động đính kèm token vào mỗi request
 axiosInstance.interceptors.request.use(
   (config) => {

@@ -1,112 +1,68 @@
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import { App as AntAppProvider } from 'antd'; 
-import 'antd/dist/reset.css';
-// --- Layouts ---
-import PrivateLayout from './components/layout/PrivateLayout'; // Giả sử bạn có layout này
-import PublicLayout from './components/layout/PublicLayout';   // và layout này
-import PlanningPage from './features/planning/PlanningPage';
-// --- Pages ---
-import LoginPage from './components/auth/LoginPage';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { App as AntApp } from 'antd';
+
+import PublicLayout from './layout/PublicLayout';
+import PrivateLayout from './layout/PrivateLayout';
+
+import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 
-// Module: Cá nhân
-
-import TimekeepingPage from './components/timekeeping/TimekeepingPage';
-//import ProfilePage from './pages/ProfilePage'; 
-
-// Module: KPI
-import BscConfigPage from './pages/BscConfigPage';
+import TimekeepingPage from './pages/TimekeepingPage';
+import MyKpiPage from './pages/MyKpiPage';
 import KpiPlanPage from './pages/KpiPlanPage';
-import MyKpiPage from './pages/MyKpiPage';  
+import MyProfilePage from './pages/MyProfilePage';
+import PlanningPage from './features/planning/PlanningPage';
+import PayrollDashboard from './pages/PayrollDashboard';
+import BscConfigPage from './pages/BscConfigPage';
 import ManagerKpiDashboard from './pages/ManagerKpiDashboard';
-
 import CompanyKpiRegistrationPage from './pages/CompanyKpiRegistrationPage';
 import CompanyMonthlyResultPage from './pages/CompanyMonthlyResultPage';
-
-
-
-// Module: Bảng lương
-import PayrollDashboard from './features/payroll/PayrollDashboard';
-
-// Module: Nhân sự (HRM)
-import HrmDashboard from './components/hrm/HrmDashboard';
-//import JobPostingsPage from './components/recruitment/JobPostingsPage';
-//import CourseCatalogPage from './components/training/CourseCatalogPage';
-import EmployeeProfilePage from './components/hrm/EmployeeProfilePage';
-import MyProfilePage from './pages/MyProfilePage';
-// Module: Cấu hình (Admin)
-import CompanyManagement from './pages/CompanyPage'; 
+import CompanyManagement from './pages/CompanyPage';
 import DepartmentManagement from './pages/DepartmentPage';
 import KpiLibraryPage from './pages/KpiLibraryPage';
 import CreateUserPage from './pages/admin/CreateUserPage';
+import HrmDashboard from './hrm/HrmDashboard';
+import EmployeeProfilePage from './pages/EmployeeProfilePage';
+import BiPage from './pages/BiPage';
 
-// Module: Báo cáo
-import BiPage from './components/bi/BiPage';
-
-function App() {
+export default function App() {
   return (
-    <AntAppProvider>
-       <AuthProvider> 
-    
-          <Routes>
-          {/* === PUBLIC ROUTES === */}
-          <Route element={<PublicLayout />}>
-            <Route path="/login" element={<LoginPage />} />
-             <Route path="/" element={<Navigate to="/login" replace />} />
-          </Route>
+    <AntApp>
+      <Routes>
+        {/* Public */}
+        <Route element={<PublicLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
 
-          {/* === PRIVATE ROUTES === */}
-          <Route element={<PrivateLayout />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
-            
-            <Route path="/my-timesheet" element={<TimekeepingPage />} />
-            <Route path="/my-kpi-plan/:employeeId" element={<MyKpiPage />} />
-            <Route path="/my-kpi" element={<KpiPlanPage />} /> 
-           
-            <Route path="/my-profile" element={<MyProfilePage />} />
-            {/* Kế hoạch */}
-            <Route path="/planning" element={<PlanningPage />} />
-            {/* --- Module: Bảng lương --- */}
-            <Route path="/payroll" element={<PayrollDashboard />} />
+        {/* Private: luôn có Header + Sidebar từ MainLayout */}
+        <Route element={<PrivateLayout />}>
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
 
-            {/* --- Module: KPI --- */}
-           
-            {/*<Route path="/kpi-evaluation/:employeeId" element={<KpiPlanPage />} />*/}
-            <Route path="/perspective-weights" element={<BscConfigPage/>} />
-            <Route path="/kpi/manager-kpi-dashboard" element={<ManagerKpiDashboard />} />
-            <Route path="/company-kpi-registration" element={<CompanyKpiRegistrationPage />} />
-            <Route path="/company-monthly-result" element={<CompanyMonthlyResultPage />} />
-            <Route path="/companies" element={<CompanyManagement />} />
-            <Route path="/departments" element={<DepartmentManagement />} />
-            <Route path="/kpi-library" element={<KpiLibraryPage />} />
-           
-            {/* --- Module: Nhân sự (HRM) --- */}
-            <Route path="/hrm" element={<HrmDashboard />} />
-           {/*<Route path="/recruitment" element={<JobPostingsPage />} />*/}
-           {/* <Route path="/training/courses" element={<CourseCatalogPage />} />*/}
-           <Route path="/hrm/employees/:id" element={<EmployeeProfilePage />} />
-             
-      
-            
-            {/* 2. THÊM ROUTE MỚI DÀNH CHO ADMIN */}
+          {/* Các trang nội bộ khác */}
+          <Route path="/my-timesheet" element={<TimekeepingPage />} />
+          <Route path="/my-kpi-plan/:employeeId" element={<MyKpiPage />} />
+          <Route path="/my-kpi" element={<KpiPlanPage />} />
+          <Route path="/my-profile" element={<MyProfilePage />} />
+          <Route path="/planning" element={<PlanningPage />} />
+          <Route path="/payroll" element={<PayrollDashboard />} />
+          <Route path="/perspective-weights" element={<BscConfigPage />} />
+          <Route path="/kpi/manager-kpi-dashboard" element={<ManagerKpiDashboard />} />
+          <Route path="/company-kpi-registration" element={<CompanyKpiRegistrationPage />} />
+          <Route path="/company-monthly-result" element={<CompanyMonthlyResultPage />} />
+          <Route path="/companies" element={<CompanyManagement />} />
+          <Route path="/departments" element={<DepartmentManagement />} />
+          <Route path="/kpi-library" element={<KpiLibraryPage />} />
           <Route path="/admin/create" element={<CreateUserPage />} />
-            
-                 {/* --- Module: Báo cáo --- */}
-            <Route path="/bi-analytics" element={<BiPage />} />
+          <Route path="/hrm" element={<HrmDashboard />} />
+          <Route path="/hrm/employees/:id" element={<EmployeeProfilePage />} />
+          <Route path="/bi-analytics" element={<BiPage />} />
+        </Route>
 
-            {/* === Default Route === */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="*" element={<div>404 Not Found</div>} /> 
-          </Route>
-        </Routes>
-
-   
-
-          </AuthProvider>
-    </AntAppProvider>
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </AntApp>
   );
 }
-
-export default App;

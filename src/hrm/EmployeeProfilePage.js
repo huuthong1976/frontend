@@ -5,11 +5,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Avatar, Descriptions, Tabs, Button, Spin, Modal, notification, Table, Tag } from 'antd';
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons';
 import api from '../../utils/api';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import EmployeeForm from './EmployeeForm';
 import moment from 'moment';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || '';
 
 const EmployeeProfilePage = () => {
     const { id } = useParams();
@@ -48,7 +48,7 @@ const EmployeeProfilePage = () => {
     if (loading) return <Spin size="large" style={{ display: 'block', marginTop: 50 }} />;
     if (!profileData) return <p>Không tìm thấy nhân viên.</p>;
 
-    const { profile, contracts } = profileData;
+    const { profile, contracts, decisions } = profileData;
 
     const contractColumns = [
         { title: 'Mã HĐ', dataIndex: 'contract_code', key: 'contract_code' },

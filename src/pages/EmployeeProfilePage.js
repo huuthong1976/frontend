@@ -3,16 +3,12 @@
 /* ========================================================= */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
 import api from 'utils/api';
-=======
-import api from '../utils/api';
->>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
-import AuthContext from '../../context/AuthContext';
-import EmployeeForm from './EmployeeForm';
+import {useAuth} from '../context/AuthContext';
+import EmployeeForm from '../hrm/EmployeeForm';
 import { Card, Descriptions, Tabs, Spin, Alert, Typography, Button, Space, Avatar, Tag } from 'antd';
 import { UserOutlined, EditOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import './HrmStyle.css'; // Import file CSS chung
+import '../hrm/HrmStyle.css'; // Import file CSS chung
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
@@ -20,7 +16,7 @@ const { TabPane } = Tabs;
 const EmployeeProfilePage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { user } = useContext(AuthContext);
+    const { user } = useContext(useAuth());
 
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);

@@ -34,7 +34,7 @@ export default function BscConfigPage() {
   const loadCompanies = useCallback(async () => {
     setCompaniesLoading(true);
     try {
-      const { data } = await api.get('/companies');
+      const { data } = await api.get('/api/companies');
       const rows = Array.isArray(data) ? data : (data?.rows || []);
       setCompanies(rows);
 
@@ -81,13 +81,13 @@ export default function BscConfigPage() {
 
     try {
       // 1) Luôn ưu tiên lấy danh mục khía cạnh
-      const { data: aspects } = await api.get('/kpi-aspects');
+      const { data: aspects } = await api.get('/api/kpi-aspects');
       const aspectRows = Array.isArray(aspects) ? aspects : [];
 
       // 2) Thử lấy tỷ trọng; nếu lỗi, không chặn
       let weightRows = [];
       try {
-        const { data } = await api.get('/kpi-aspects/weights', {
+        const { data } = await api.get('/api/kpi-aspects/weights', {
           params: { company_id: selectedCompany, year: selectedYear },
         });
         weightRows = Array.isArray(data) ? data : [];

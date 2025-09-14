@@ -1,7 +1,7 @@
 // src/components/layout/Sidebar.js
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import './Layout.css'; // Sử dụng file CSS chung
 
 const menuConfig = (user) => [
@@ -14,7 +14,7 @@ const menuConfig = (user) => [
         children: [
             { name: 'KPI của tôi', path: '/my-kpi' },
             { name: 'Hồ sơ cá nhân', path: '/my-profile' },
-            { name: 'Bảng chấm công', path: '' },
+            { name: 'Bảng chấm công', path: '/my-timesheet' },
             { name: 'Đề xuất', path: '' },
             { name: 'Nhật ký', path: '' },
         ]

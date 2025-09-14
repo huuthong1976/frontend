@@ -4,8 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Table, Input, Select, Button, Space, Tag, Popconfirm, Tooltip, Modal, Card, notification } from 'antd';
 import { PlusOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import api from '../../utils/api';
-import { useAuth } from '../../context/AuthContext';
+import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 import EmployeeForm from './EmployeeForm';
 
 
