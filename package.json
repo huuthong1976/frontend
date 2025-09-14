@@ -1,24 +1,15 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-<<<<<<< HEAD
   "private": true,
-  "proxy": "http://localhost:5000",
-  "homepage": "https://thoidaiso.info.vn",
+  "homepage": "https://huuthong1976.github.io/frontend",
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-=======
-  "homepage": "https://huuthong1976.github.io/frontend/",
-  "private": true,  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build -b gh-pages",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-   
->>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
@@ -42,30 +33,22 @@
     "web-vitals": "^5.1.0",
     "xlsx": "^0.18.5"
   },
-<<<<<<< HEAD
-
-
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
   },
-=======
->>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
   "browserslist": {
     "production": [
       ">0.2%",
       "not dead",
       "not op_mini all"
-     ]
-    },
-    "browserslist": {
-      "production": [">0.2%", "not dead", "not op_mini all"],
-      "development": [
-        "last 1 chrome version",
-        "last 1 firefox version",
-        "last 1 safari version"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   },
   "devDependencies": {

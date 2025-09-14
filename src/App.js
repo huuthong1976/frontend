@@ -49,12 +49,8 @@ function App() {
   return (
     <AntAppProvider>
        <AuthProvider> 
-<<<<<<< HEAD
-      <Router>
-=======
     
->>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
-        <Routes>
+          <Routes>
           {/* === PUBLIC ROUTES === */}
           <Route element={<PublicLayout />}>
             <Route path="/login" element={<LoginPage />} />
@@ -105,12 +101,10 @@ function App() {
             <Route path="*" element={<div>404 Not Found</div>} /> 
           </Route>
         </Routes>
-<<<<<<< HEAD
-      </Router>
-=======
-    
->>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
-      </AuthProvider>
+
+   
+
+          </AuthProvider>
     </AntAppProvider>
   );
 }

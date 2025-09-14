@@ -1,15 +1,11 @@
-<<<<<<< HEAD
-// src/utils/api.js (ĐÃ SỬA)
-import axios from 'axios';
-=======
-// src/utils/api.js
+
 import axios from 'axios';
 
 // Đọc biến môi trường cho CRA
 const rawApiHost =
   (typeof process !== 'undefined' ? process.env.REACT_APP_API_BASE_URL : '') ||
   'https://backend-production-bc73.up.railway.app';
->>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
+
 
 const API_HOST = String(rawApiHost).replace(/\/$/, ''); // bỏ "/" cuối
 
@@ -30,26 +26,6 @@ function redirectToLogin() {
 
 // Axios instance
 const api = axios.create({
-<<<<<<< HEAD
-  baseURL: process.env.REACT_APP_API_BASE_URL,
-  withCredentials: true,
-});
-
-function getToken() {
-  return (
-    localStorage.getItem('token') ||
-    sessionStorage.getItem('token')
-  );
-}
-
-// Request Interceptor: Tự động GỬI token đi
-api.interceptors.request.use(
-  (config) => {
-    // SỬA LẠI: Gọi hàm getToken() để lấy token từ cả hai nơi
-    const token = getToken(); 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-=======
   baseURL: `${API_HOST}/api`, // các call kiểu api.get('/companies') -> gọi tới {API_HOST}/api/companies
   headers: {
     'Content-Type': 'application/json',
@@ -76,7 +52,6 @@ api.interceptors.response.use(
       localStorage.removeItem('token');
       sessionStorage.removeItem('token');
       redirectToLogin();
->>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
     }
     return config;
   },
@@ -96,9 +71,5 @@ api.interceptors.response.use(
   }
 );
 
-<<<<<<< HEAD
-export default api;
-=======
 export default api;
 
->>>>>>> f15a9d8302fa2b98bc412e4e61010564b5d3a109
